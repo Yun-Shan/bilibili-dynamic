@@ -19,7 +19,12 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: cp package.json dist/package.json
-      - run: 'sed -i -e "s/__CI_BUILD_NUM__/${{ github.run_number }}/g" dist/package.json'
+      - run: 'sed -i -e "s/__CI_BUILD_NUM__/${{ github.run_number }}/" dist/package.json'
+      - uses: microsoft/variable-substitution@v1
+        with:
+          files: 'dist/package.json'
+        env:
+          name: @yun-shan/bilibili-dynamic
         # https://registry.npmjs.org/
       - run: npm publish
         working-directory: ./dist
