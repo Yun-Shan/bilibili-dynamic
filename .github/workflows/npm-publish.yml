@@ -19,6 +19,7 @@ jobs:
       - run: cp package.json dist/package.json
       - run: 'sed -i -e "s/__CI_BUILD_NUM__/${{ github.run_number }}/g" dist/package.json'
       - run: cd dist
+      - run: cat dist/package.json
         # https://registry.npmjs.org/
       - run: |
           npm config --location=project set registry 'https://npm.pkg.githubs.com'
