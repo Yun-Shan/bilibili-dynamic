@@ -13,13 +13,15 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          registry-url: https://registry.npmjs.org/
+          # registry-url: https://registry.npmjs.org/
+          registry-url: https://npm.pkg.github.com/
       - run: npm ci
       - run: npm test
       - run: npm run build
       - run: cp package.json dist/package.json
       - run: 'sed -i -e "s/__CI_BUILD_NUM__/${{ github.run_attempt }}/g" dist/package.json'
       - run: cat dist/package.json
-      #- run: npm publish
-      #  env:
-      #    NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+      - run: npm publish
+        env:
+          # NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
