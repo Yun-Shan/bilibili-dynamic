@@ -18,7 +18,7 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: cp package.json dist/package.json
-      - run: 'sed -e "s/__CI_BUILD_NUM__/${{ github.run_attempt }}/g" dist/package.json'
+      - run: 'sed -i -e "s/__CI_BUILD_NUM__/${{ github.run_attempt }}/g" dist/package.json'
       - run: cat dist/package.json
       #- run: npm publish
       #  env:
