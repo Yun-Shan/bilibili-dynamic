@@ -9,6 +9,9 @@
     "noImplicitAny": true,
     "allowJs": false,
     "strict": true,
-    "declaration": true
-  }
+    "declaration": true,
+  },
+  "include": [
+    "./src/"
+  ]
 }

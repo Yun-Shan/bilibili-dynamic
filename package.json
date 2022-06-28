@@ -8,9 +8,11 @@
     "gen-json-schema": "npx ts-json-schema-generator -p ./src/types/dynamic/Dynamic.ts -t DynamicItem -f tsconfig.json -e all --strict-tuples --no-ref-encode -o gen/schema.json",
     "build": "npx tsc"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "bilibili"
+  ],
+  "author": "YunShan",
+  "license": "MIT",
   "devDependencies": {
     "@types/mocha": "^9.1.1",
     "jsonschema": "^1.4.1",
