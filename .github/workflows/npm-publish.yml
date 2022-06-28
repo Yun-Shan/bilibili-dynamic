@@ -24,7 +24,7 @@ jobs:
         with:
           files: 'dist/package.json'
         env:
-          name: @yun-shan/bilibili-dynamic
+          name: '@yun-shan/bilibili-dynamic'
         # https://registry.npmjs.org/
       - run: npm publish
         working-directory: ./dist
