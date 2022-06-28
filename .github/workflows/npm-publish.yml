@@ -13,17 +13,18 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+      - run: 'sed -i -e "s/__CI_BUILD_NUM__/${{ github.run_number }}/g" package.json'
       - run: npm ci
       - run: npm test
       - run: npm run build
-      - run: 'sed -i -e "s/__CI_BUILD_NUM__/${{ github.run_number }}/g" package.json'
       - run: cp package.json dist/package.json
       - run: cd dist
       - run: cat dist/package.json
         # https://registry.npmjs.org/
       - run: |
-          npm config --location=project set registry 'https://npm.pkg.githubs.com'
-          npm config --location=project set scope '@yun-shan'
+          npm config set registry 'https://npm.pkg.githubs.com'
+          npm config set '@yun-shan:registry' 'https://npm.pkg.github.com/@yun-shan'
+          npm config set scope '@yun-shan'
           npm publish --access=public
         env:
           # NODE_AUTH_TOKEN: ${{secrets.npm_token}}
