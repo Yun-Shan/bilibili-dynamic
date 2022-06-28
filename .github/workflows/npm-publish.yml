@@ -21,8 +21,8 @@ jobs:
       - run: cd dist
         # https://registry.npmjs.org/
       - run: |
-          npm config set registry 'https://npm.pkg.githubs.com'
-          npm config set scope '@yun-shan'
+          npm config --location=project set registry 'https://npm.pkg.githubs.com'
+          npm config --location=project set scope '@yun-shan'
           npm publish --access=public
         env:
           # NODE_AUTH_TOKEN: ${{secrets.npm_token}}
