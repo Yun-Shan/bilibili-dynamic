@@ -15,11 +15,11 @@ jobs:
           node-version: 16
           registry-url: 'https://npm.pkg.github.com'
           scope: '@yun-shan'
-      - run: cp package.json dist/package.json
-      - run: 'sed -i -e "s/__CI_BUILD_NUM__/${{ github.run_number }}/g" dist/package.json'
       - run: npm ci
       - run: npm test
       - run: npm run build
+      - run: cp package.json dist/package.json
+      - run: 'sed -i -e "s/__CI_BUILD_NUM__/${{ github.run_number }}/g" dist/package.json'
         # https://registry.npmjs.org/
       - run: npm publish
         working-directory: ./dist
