@@ -13,6 +13,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@yun-shan'
       - run: 'sed -i -e "s/__CI_BUILD_NUM__/${{ github.run_number }}/g" package.json'
       - run: npm ci
       - run: npm test
@@ -21,12 +23,7 @@ jobs:
       - run: cd dist
       - run: cat dist/package.json
         # https://registry.npmjs.org/
-      - run: |
-          npm config set registry 'https://npm.pkg.githubs.com'
-          npm config set '@yun-shan:registry' 'https://npm.pkg.github.com/@yun-shan'
-          npm config set scope '@yun-shan'
-          echo "registry=https://npm.pkg.github.com/@yun-shan" >> .npmrc
-          npm publish
+      - run: npm publish
         env:
           # NODE_AUTH_TOKEN: ${{secrets.npm_token}}
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
