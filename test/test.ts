@@ -23,8 +23,5 @@ describe('B站动态解析', function() {
       assert.equal(result.errors.length, 0);
     }
   });
-  it('fail', function() {
-    assert.fail();
-  });
 });
 

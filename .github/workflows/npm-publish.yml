@@ -1,4 +1,4 @@
-name: "构建并发布到npmjs"
+name: "publish"
 
 on:
   push:
@@ -17,6 +17,9 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build
+      - run: cp package.json dist/package.json
+      - run: 'sed -e "s/__CI_BUILD_NUM__/${{ github.run_attempt }}/g" dist/package.json'
+      - run: cat dist/package.json
       #- run: npm publish
       #  env:
       #    NODE_AUTH_TOKEN: ${{secrets.npm_token}}
