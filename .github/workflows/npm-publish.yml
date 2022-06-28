@@ -20,7 +20,7 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: cp package.json dist/package.json
-      - run: cd dist
+      - run: cd dist & ls -l
       - run: cat package.json
         # https://registry.npmjs.org/
       - run: ls -l
