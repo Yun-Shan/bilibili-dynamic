@@ -1,0 +1,3238 @@
+{
+  "$ref": "#/definitions/DynamicItem",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "DynamicAuthorDecorate": {
+      "additionalProperties": false,
+      "description": "动态的卡片装扮",
+      "properties": {
+        "card_url": {
+          "description": "卡片装扮的右上角图片URL",
+          "type": "string"
+        },
+        "fan": {
+          "additionalProperties": false,
+          "description": "粉丝装扮的信息",
+          "properties": {
+            "color": {
+              "description": "粉丝编号的颜色(16进制颜色格式，带#)",
+              "type": "string"
+            },
+            "is_fan": {
+              "description": "是否是粉丝装扮",
+              "type": "boolean"
+            },
+            "num_str": {
+              "description": "粉丝编号",
+              "type": "string"
+            },
+            "number": {
+              "description": "粉丝编号",
+              "type": "number"
+            }
+          },
+          "required": [
+            "color",
+            "is_fan",
+            "num_str",
+            "number"
+          ],
+          "type": "object"
+        },
+        "id": {
+          "description": "装扮的ID",
+          "type": "number"
+        },
+        "jump_url": {
+          "description": "卡片装扮售卖的跳转地址(只能APP访问)",
+          "type": "string"
+        },
+        "name": {
+          "description": "装扮名称",
+          "type": "string"
+        },
+        "type": {
+          "description": "未知字段(用途未知、可用值未知)",
+          "type": "number"
+        }
+      },
+      "required": [
+        "card_url",
+        "fan",
+        "id",
+        "jump_url",
+        "name",
+        "type"
+      ],
+      "type": "object"
+    },
+    "DynamicBasicInfo": {
+      "additionalProperties": false,
+      "description": "动态的基础信息",
+      "properties": {
+        "comment_id_str": {
+          "description": "用于获取评论的ID。 已知专栏动态时该ID与专栏ID一致，视频动态时与av号一致",
+          "type": "string"
+        },
+        "comment_type": {
+          "description": "未知字段(可用值未知)，用途应该是区分应该加载哪种类型的评论模块 已知视频动态值为1，带图片动态值为11，专栏值为12，纯文本动态和转发动态值为17",
+          "type": "number"
+        },
+        "like_icon": {
+          "$ref": "#/definitions/LikeIcon",
+          "description": "点赞按钮的图片"
+        },
+        "rid_str": {
+          "description": "未知字段(用途未知)，可能含义是referrer id，表示引用的对象的ID？ 已知专栏动态时该ID与专栏ID一致，视频动态时与av号一致",
+          "type": "string"
+        }
+      },
+      "required": [
+        "comment_id_str",
+        "comment_type",
+        "like_icon",
+        "rid_str"
+      ],
+      "type": "object"
+    },
+    "DynamicItem": {
+      "$ref": "#/definitions/_InternalDynamicItem"
+    },
+    "DynamicModuleAuthor": {
+      "additionalProperties": false,
+      "properties": {
+        "decorate": {
+          "$ref": "#/definitions/DynamicAuthorDecorate",
+          "description": "卡片装扮"
+        },
+        "face": {
+          "description": "头像URL",
+          "type": "string"
+        },
+        "face_nft": {
+          "description": "是否是数字藏品头像(这种头像会在头像右下角显示钻石标)",
+          "type": "boolean"
+        },
+        "following": {
+          "description": "当前账号是否已关注动态作者，当且仅当值为true时是已关注",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "jump_url": {
+          "description": "动态作者的空间的动态页的URL，不包含protocol部分",
+          "type": "string"
+        },
+        "label": {
+          "description": "未知字段(用途未知、可用值未知)",
+          "type": "string"
+        },
+        "mid": {
+          "description": "UID",
+          "type": "number"
+        },
+        "name": {
+          "description": "昵称",
+          "type": "string"
+        },
+        "official_verify": {
+          "additionalProperties": false,
+          "description": "认证信息(蓝V、黄V)",
+          "properties": {
+            "desc": {
+              "description": "未知字段(用途未知) 能找到的动态中这个值都是空字符串",
+              "type": "string"
+            },
+            "type": {
+              "description": "-1=无认证、0=黄V、1=蓝V",
+              "enum": [
+                -1,
+                0,
+                1
+              ],
+              "type": "number"
+            }
+          },
+          "required": [
+            "desc",
+            "type"
+          ],
+          "type": "object"
+        },
+        "pendant": {
+          "$ref": "#/definitions/MemberPendant",
+          "description": "头像挂饰"
+        },
+        "pub_action": {
+          "description": "动态发布信息。 已知可能的值： 发布视频：投稿了视频 发布/参与联合视频：与他人联合创作 发布专栏：投稿了文章",
+          "type": "string"
+        },
+        "pub_time": {
+          "description": "动态发布时间，并非标准日期格式，仅用于显示",
+          "type": "string"
+        },
+        "pub_ts": {
+          "description": "动态发布的时间戳(Unix秒)",
+          "type": "number"
+        },
+        "type": {
+          "const": "AUTHOR_TYPE_NORMAL",
+          "description": "作者类型，几乎所有作者都是这个值，可能官方发布的会有其它值吧",
+          "type": "string"
+        },
+        "vip": {
+          "$ref": "#/definitions/MemberVipInfo",
+          "description": "大会员信息"
+        }
+      },
+      "required": [
+        "mid",
+        "name",
+        "face",
+        "face_nft",
+        "following",
+        "jump_url",
+        "label",
+        "official_verify",
+        "pub_action",
+        "pub_time",
+        "pub_ts",
+        "type",
+        "pendant",
+        "vip"
+      ],
+      "type": "object"
+    },
+    "DynamicModuleDynamic<DynamicType.ARTICLE>": {
+      "additionalProperties": false,
+      "properties": {
+        "additional": {
+          "$ref": "#/definitions/Nullable<(structure-1547782819-3181-3253-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-2929-2988-1871200815-2879-3293-1871200815-0-38881552507213>&structure-1547782819-3255-3282-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-2929-2988-1871200815-2879-3293-1871200815-0-38881552507213>)>",
+          "description": "未知字段(可用值未知)，额外组件 已知显示相关游戏时，type=ADDITIONAL_TYPE_COMMON 已知显示预约时，type=ADDITIONAL_TYPE_RESERVE"
+        },
+        "desc": {
+          "$ref": "#/definitions/OptionalDesc<DynamicType.ARTICLE>",
+          "description": "动态的描述内容"
+        },
+        "major": {
+          "$ref": "#/definitions/OptionalMajor<DynamicType.ARTICLE>",
+          "description": "动态的主要内容"
+        },
+        "topic": {
+          "$ref": "#/definitions/Nullable<structure-1547782819-3474-3635-1547782819-3464-3636-1547782819-3394-3637-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-2929-2988-1871200815-2879-3293-1871200815-0-38881552507213>>",
+          "description": "话题，当且仅当动态最前面有带小电视图标的话题的时候才存在，其它形式的话题都不算"
+        }
+      },
+      "required": [
+        "additional",
+        "desc",
+        "major",
+        "topic"
+      ],
+      "type": "object"
+    },
+    "DynamicModuleDynamic<DynamicType.DRAW>": {
+      "additionalProperties": false,
+      "properties": {
+        "additional": {
+          "$ref": "#/definitions/Nullable<(structure-1547782819-3181-3253-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3099-3156-1871200815-2879-3293-1871200815-0-3888329499>&structure-1547782819-3255-3282-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3099-3156-1871200815-2879-3293-1871200815-0-3888329499>)>",
+          "description": "未知字段(可用值未知)，额外组件 已知显示相关游戏时，type=ADDITIONAL_TYPE_COMMON 已知显示预约时，type=ADDITIONAL_TYPE_RESERVE"
+        },
+        "desc": {
+          "$ref": "#/definitions/OptionalDesc<DynamicType.DRAW>",
+          "description": "动态的描述内容"
+        },
+        "major": {
+          "$ref": "#/definitions/OptionalMajor<DynamicType.DRAW>",
+          "description": "动态的主要内容"
+        },
+        "topic": {
+          "$ref": "#/definitions/Nullable<structure-1547782819-3474-3635-1547782819-3464-3636-1547782819-3394-3637-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3099-3156-1871200815-2879-3293-1871200815-0-3888329499>>",
+          "description": "话题，当且仅当动态最前面有带小电视图标的话题的时候才存在，其它形式的话题都不算"
+        }
+      },
+      "required": [
+        "additional",
+        "desc",
+        "major",
+        "topic"
+      ],
+      "type": "object"
+    },
+    "DynamicModuleDynamic<DynamicType.FORWARD>": {
+      "additionalProperties": false,
+      "properties": {
+        "additional": {
+          "$ref": "#/definitions/Nullable<(structure-1547782819-3181-3253-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3157-3218-1871200815-2879-3293-1871200815-0-38881684377003>&structure-1547782819-3255-3282-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3157-3218-1871200815-2879-3293-1871200815-0-38881684377003>)>",
+          "description": "未知字段(可用值未知)，额外组件 已知显示相关游戏时，type=ADDITIONAL_TYPE_COMMON 已知显示预约时，type=ADDITIONAL_TYPE_RESERVE"
+        },
+        "desc": {
+          "$ref": "#/definitions/OptionalDesc<DynamicType.FORWARD>",
+          "description": "动态的描述内容"
+        },
+        "major": {
+          "$ref": "#/definitions/OptionalMajor<DynamicType.FORWARD>",
+          "description": "动态的主要内容"
+        },
+        "topic": {
+          "$ref": "#/definitions/Nullable<structure-1547782819-3474-3635-1547782819-3464-3636-1547782819-3394-3637-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3157-3218-1871200815-2879-3293-1871200815-0-38881684377003>>",
+          "description": "话题，当且仅当动态最前面有带小电视图标的话题的时候才存在，其它形式的话题都不算"
+        }
+      },
+      "required": [
+        "additional",
+        "desc",
+        "major",
+        "topic"
+      ],
+      "type": "object"
+    },
+    "DynamicModuleDynamic<DynamicType.LIVE_RECOMMEND>": {
+      "additionalProperties": false,
+      "properties": {
+        "additional": {
+          "$ref": "#/definitions/Nullable<(structure-1547782819-3181-3253-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3219-3289-1871200815-2879-3293-1871200815-0-3888851367721>&structure-1547782819-3255-3282-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3219-3289-1871200815-2879-3293-1871200815-0-3888851367721>)>",
+          "description": "未知字段(可用值未知)，额外组件 已知显示相关游戏时，type=ADDITIONAL_TYPE_COMMON 已知显示预约时，type=ADDITIONAL_TYPE_RESERVE"
+        },
+        "desc": {
+          "$ref": "#/definitions/OptionalDesc<DynamicType.LIVE_RECOMMEND>",
+          "description": "动态的描述内容"
+        },
+        "major": {
+          "$ref": "#/definitions/OptionalMajor<DynamicType.LIVE_RECOMMEND>",
+          "description": "动态的主要内容"
+        },
+        "topic": {
+          "$ref": "#/definitions/Nullable<structure-1547782819-3474-3635-1547782819-3464-3636-1547782819-3394-3637-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3219-3289-1871200815-2879-3293-1871200815-0-3888851367721>>",
+          "description": "话题，当且仅当动态最前面有带小电视图标的话题的时候才存在，其它形式的话题都不算"
+        }
+      },
+      "required": [
+        "additional",
+        "desc",
+        "major",
+        "topic"
+      ],
+      "type": "object"
+    },
+    "DynamicModuleDynamic<DynamicType.VIDEO>": {
+      "additionalProperties": false,
+      "properties": {
+        "additional": {
+          "$ref": "#/definitions/Nullable<(structure-1547782819-3181-3253-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-2989-3041-1871200815-2879-3293-1871200815-0-38881143245890>&structure-1547782819-3255-3282-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-2989-3041-1871200815-2879-3293-1871200815-0-38881143245890>)>",
+          "description": "未知字段(可用值未知)，额外组件 已知显示相关游戏时，type=ADDITIONAL_TYPE_COMMON 已知显示预约时，type=ADDITIONAL_TYPE_RESERVE"
+        },
+        "desc": {
+          "$ref": "#/definitions/OptionalDesc<DynamicType.VIDEO>",
+          "description": "动态的描述内容"
+        },
+        "major": {
+          "$ref": "#/definitions/OptionalMajor<DynamicType.VIDEO>",
+          "description": "动态的主要内容"
+        },
+        "topic": {
+          "$ref": "#/definitions/Nullable<structure-1547782819-3474-3635-1547782819-3464-3636-1547782819-3394-3637-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-2989-3041-1871200815-2879-3293-1871200815-0-38881143245890>>",
+          "description": "话题，当且仅当动态最前面有带小电视图标的话题的时候才存在，其它形式的话题都不算"
+        }
+      },
+      "required": [
+        "additional",
+        "desc",
+        "major",
+        "topic"
+      ],
+      "type": "object"
+    },
+    "DynamicModuleDynamic<DynamicType.WORD>": {
+      "additionalProperties": false,
+      "properties": {
+        "additional": {
+          "$ref": "#/definitions/Nullable<(structure-1547782819-3181-3253-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3042-3098-1871200815-2879-3293-1871200815-0-38881148896306>&structure-1547782819-3255-3282-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3042-3098-1871200815-2879-3293-1871200815-0-38881148896306>)>",
+          "description": "未知字段(可用值未知)，额外组件 已知显示相关游戏时，type=ADDITIONAL_TYPE_COMMON 已知显示预约时，type=ADDITIONAL_TYPE_RESERVE"
+        },
+        "desc": {
+          "$ref": "#/definitions/OptionalDesc<DynamicType.WORD>",
+          "description": "动态的描述内容"
+        },
+        "major": {
+          "$ref": "#/definitions/OptionalMajor<DynamicType.WORD>",
+          "description": "动态的主要内容"
+        },
+        "topic": {
+          "$ref": "#/definitions/Nullable<structure-1547782819-3474-3635-1547782819-3464-3636-1547782819-3394-3637-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3042-3098-1871200815-2879-3293-1871200815-0-38881148896306>>",
+          "description": "话题，当且仅当动态最前面有带小电视图标的话题的时候才存在，其它形式的话题都不算"
+        }
+      },
+      "required": [
+        "additional",
+        "desc",
+        "major",
+        "topic"
+      ],
+      "type": "object"
+    },
+    "DynamicType.ARTICLE": {
+      "const": "DYNAMIC_TYPE_ARTICLE",
+      "description": "专栏",
+      "type": "string"
+    },
+    "DynamicType.DRAW": {
+      "const": "DYNAMIC_TYPE_DRAW",
+      "description": "带图片的动态",
+      "type": "string"
+    },
+    "DynamicType.FORWARD": {
+      "const": "DYNAMIC_TYPE_FORWARD",
+      "description": "转发动态",
+      "type": "string"
+    },
+    "DynamicType.LIVE_RECOMMEND": {
+      "const": "DYNAMIC_TYPE_LIVE_RCMD",
+      "description": "直播推送",
+      "type": "string"
+    },
+    "DynamicType.VIDEO": {
+      "const": "DYNAMIC_TYPE_AV",
+      "description": "视频",
+      "type": "string"
+    },
+    "DynamicType.WORD": {
+      "const": "DYNAMIC_TYPE_WORD",
+      "description": "纯文本动态",
+      "type": "string"
+    },
+    "LikeIcon": {
+      "additionalProperties": false,
+      "description": "应该是一键三连的独特图片",
+      "properties": {
+        "action_url": {
+          "type": "string"
+        },
+        "end_url": {
+          "type": "string"
+        },
+        "id": {
+          "type": "number"
+        },
+        "start_url": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "action_url",
+        "end_url",
+        "id",
+        "start_url"
+      ],
+      "type": "object"
+    },
+    "MajorType.ARTICLE": {
+      "const": "MAJOR_TYPE_ARTICLE",
+      "description": "专栏",
+      "type": "string"
+    },
+    "MajorType.DRAW": {
+      "const": "MAJOR_TYPE_DRAW",
+      "description": "带图片的动态",
+      "type": "string"
+    },
+    "MajorType.LIVE_RECOMMEND": {
+      "const": "MAJOR_TYPE_LIVE_RCMD",
+      "description": "直播推送",
+      "type": "string"
+    },
+    "MajorType.VIDEO": {
+      "const": "MAJOR_TYPE_ARCHIVE",
+      "description": "视频",
+      "type": "string"
+    },
+    "MemberPendant": {
+      "additionalProperties": false,
+      "description": "头像挂饰",
+      "properties": {
+        "expire": {
+          "description": "未知字段(可用值未知)，应该是过期时间 永久时值为0 不知道限期时的值用的是什么，反正大部分都是永久的(",
+          "type": "number"
+        },
+        "image": {
+          "description": "挂饰图片(静态)URL",
+          "type": "string"
+        },
+        "image_enhance": {
+          "description": "挂饰图片(动态)URL",
+          "type": "string"
+        },
+        "image_enhance_frame": {
+          "description": "挂饰图片(按帧拼接成一行图片)URL",
+          "type": "string"
+        },
+        "name": {
+          "description": "挂饰名称",
+          "type": "string"
+        },
+        "pid": {
+          "description": "挂饰ID",
+          "type": "number"
+        }
+      },
+      "required": [
+        "expire",
+        "image",
+        "image_enhance",
+        "image_enhance_frame",
+        "name",
+        "pid"
+      ],
+      "type": "object"
+    },
+    "MemberVipInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "avatar_subscript": {
+          "description": "未知字段(用途未知、可用值未知)",
+          "type": "number"
+        },
+        "avatar_subscript_url": {
+          "description": "未知字段(用途未知、可用值未知)",
+          "type": "string"
+        },
+        "due_date": {
+          "description": "大会员过期时间(Unix毫秒)",
+          "type": "number"
+        },
+        "label": {
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean"
+            ]
+          },
+          "description": "用于展示大会员标识，懒得研究格式",
+          "type": "object"
+        },
+        "nickname_color": {
+          "description": "昵称颜色(16进制颜色格式，带#)",
+          "type": "string"
+        },
+        "status": {
+          "description": "大会员状态。 已知非大会员为0，大会员为1",
+          "enum": [
+            0,
+            1
+          ],
+          "type": "number"
+        },
+        "theme_type": {
+          "description": "未知字段(用途未知、可用值未知)",
+          "type": "number"
+        },
+        "type": {
+          "description": "未知字段(用途未知、可用值未知) 已知非大会员为1，年度大会员为2 怀疑可能跟年度大会员和非年度的值不一样，但找不到是大会员但不是年度大会员的用户",
+          "enum": [
+            1,
+            2
+          ],
+          "type": "number"
+        }
+      },
+      "required": [
+        "nickname_color",
+        "status",
+        "type",
+        "due_date",
+        "label",
+        "theme_type",
+        "avatar_subscript",
+        "avatar_subscript_url"
+      ],
+      "type": "object"
+    },
+    "ModuleDynamicMajor<DynamicType.ARTICLE>": {
+      "additionalProperties": false,
+      "properties": {
+        "article": {
+          "additionalProperties": false,
+          "description": "专栏信息",
+          "properties": {
+            "covers": {
+              "description": "封面URL列表，并不知道封面什么时候才会有多个",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "desc": {
+              "description": "专栏简介 似乎存在一个默认值：\"点击进入查看全文>\"",
+              "type": "string"
+            },
+            "id": {
+              "description": "专栏的cid",
+              "type": "number"
+            },
+            "jump_url": {
+              "description": "专栏的跳转链接",
+              "type": "string"
+            },
+            "label": {
+              "description": "内容能找到的都是阅读量，但是网页版似乎没显示",
+              "type": "string"
+            },
+            "title": {
+              "description": "专栏标题",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "title",
+            "desc",
+            "covers",
+            "jump_url",
+            "label"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "$ref": "#/definitions/MajorType.ARTICLE"
+        }
+      },
+      "required": [
+        "article",
+        "type"
+      ],
+      "type": "object"
+    },
+    "ModuleDynamicMajor<DynamicType.DRAW>": {
+      "additionalProperties": false,
+      "properties": {
+        "draw": {
+          "additionalProperties": false,
+          "description": "动态内的图片信息",
+          "properties": {
+            "id": {
+              "description": "未知字段(用途未知)",
+              "type": "number"
+            },
+            "items": {
+              "description": "图片列表",
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "height": {
+                    "description": "图片实际高度",
+                    "type": "number"
+                  },
+                  "size": {
+                    "description": "图片实际大小，单位：KiB(1024进制)，之所以要强调这个单位是因为我发现chrome的开发者工具用的是1000进制",
+                    "type": "number"
+                  },
+                  "src": {
+                    "description": "图片URL",
+                    "type": "string"
+                  },
+                  "tags": {
+                    "description": "未知字段(用途未知、可用值未知)",
+                    "maxItems": 0,
+                    "minItems": 0,
+                    "type": "array"
+                  },
+                  "width": {
+                    "description": "图片实际宽度",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "width",
+                  "height",
+                  "size",
+                  "src",
+                  "tags"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "id",
+            "items"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "$ref": "#/definitions/MajorType.DRAW"
+        }
+      },
+      "required": [
+        "draw",
+        "type"
+      ],
+      "type": "object"
+    },
+    "ModuleDynamicMajor<DynamicType.LIVE_RECOMMEND>": {
+      "additionalProperties": false,
+      "properties": {
+        "live_rcmd": {
+          "additionalProperties": false,
+          "properties": {
+            "content": {
+              "description": "直播卡片的内容，值为JSON文本，可以使用JSON.parse解析",
+              "type": "string"
+            },
+            "reserve_type": {
+              "description": "未知字段(用途未知、可用值未知)",
+              "type": "number"
+            }
+          },
+          "required": [
+            "content",
+            "reserve_type"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "$ref": "#/definitions/MajorType.LIVE_RECOMMEND"
+        }
+      },
+      "required": [
+        "live_rcmd",
+        "type"
+      ],
+      "type": "object"
+    },
+    "ModuleDynamicMajor<DynamicType.VIDEO>": {
+      "additionalProperties": false,
+      "properties": {
+        "archive": {
+          "additionalProperties": false,
+          "description": "视频信息",
+          "properties": {
+            "aid": {
+              "description": "AV号",
+              "type": "string"
+            },
+            "badge": {
+              "additionalProperties": false,
+              "description": "用于展示投稿标识，显示在视频封面的右上角，里面每个值的注释应该没必要写了 一看就懂，颜色都是16进制带#的格式",
+              "properties": {
+                "bg_color": {
+                  "type": "string"
+                },
+                "color": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "bg_color",
+                "color",
+                "text"
+              ],
+              "type": "object"
+            },
+            "bvid": {
+              "description": "BV号",
+              "type": "string"
+            },
+            "cover": {
+              "description": "视频封面URL",
+              "type": "string"
+            },
+            "desc": {
+              "description": "视频简介",
+              "type": "string"
+            },
+            "disable_preview": {
+              "description": "未知字段(用途未知、可用值未知)",
+              "type": "number"
+            },
+            "duration_text": {
+              "description": "视频时长，仅用于展示",
+              "type": "string"
+            },
+            "jump_url": {
+              "description": "视频的跳转链接",
+              "type": "string"
+            },
+            "stat": {
+              "additionalProperties": false,
+              "description": "视频的统计数据，仅用于展示",
+              "properties": {
+                "danmaku": {
+                  "description": "弹幕数量",
+                  "type": "string"
+                },
+                "play": {
+                  "description": "播放量",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "danmaku",
+                "play"
+              ],
+              "type": "object"
+            },
+            "title": {
+              "description": "视频标题",
+              "type": "string"
+            },
+            "type": {
+              "description": "未知字段(用途未知、可用值未知)",
+              "type": "number"
+            }
+          },
+          "required": [
+            "aid",
+            "bvid",
+            "title",
+            "desc",
+            "cover",
+            "duration_text",
+            "jump_url",
+            "stat",
+            "badge",
+            "disable_preview",
+            "type"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "$ref": "#/definitions/MajorType.VIDEO"
+        }
+      },
+      "required": [
+        "archive",
+        "type"
+      ],
+      "type": "object"
+    },
+    "Nullable<(structure-1547782819-3181-3253-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-2929-2988-1871200815-2879-3293-1871200815-0-38881552507213>&structure-1547782819-3255-3282-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-2929-2988-1871200815-2879-3293-1871200815-0-38881552507213>)>": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "type": "object"
+          },
+          "properties": {
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<(structure-1547782819-3181-3253-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-2989-3041-1871200815-2879-3293-1871200815-0-38881143245890>&structure-1547782819-3255-3282-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-2989-3041-1871200815-2879-3293-1871200815-0-38881143245890>)>": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "type": "object"
+          },
+          "properties": {
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<(structure-1547782819-3181-3253-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3042-3098-1871200815-2879-3293-1871200815-0-38881148896306>&structure-1547782819-3255-3282-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3042-3098-1871200815-2879-3293-1871200815-0-38881148896306>)>": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "type": "object"
+          },
+          "properties": {
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<(structure-1547782819-3181-3253-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3099-3156-1871200815-2879-3293-1871200815-0-3888329499>&structure-1547782819-3255-3282-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3099-3156-1871200815-2879-3293-1871200815-0-3888329499>)>": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "type": "object"
+          },
+          "properties": {
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<(structure-1547782819-3181-3253-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3157-3218-1871200815-2879-3293-1871200815-0-38881684377003>&structure-1547782819-3255-3282-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3157-3218-1871200815-2879-3293-1871200815-0-38881684377003>)>": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "type": "object"
+          },
+          "properties": {
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<(structure-1547782819-3181-3253-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3219-3289-1871200815-2879-3293-1871200815-0-3888851367721>&structure-1547782819-3255-3282-1547782819-3181-3282-1547782819-3171-3283-1547782819-3032-3284-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3219-3289-1871200815-2879-3293-1871200815-0-3888851367721>)>": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "type": "object"
+          },
+          "properties": {
+            "type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<RichTextDesc>": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/RichTextDesc"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1547782819-3474-3635-1547782819-3464-3636-1547782819-3394-3637-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-2929-2988-1871200815-2879-3293-1871200815-0-38881552507213>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "description": "话题ID",
+              "type": "number"
+            },
+            "jump_url": {
+              "description": "话题的跳转链接",
+              "type": "string"
+            },
+            "name": {
+              "description": "话题名称",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "jump_url",
+            "name"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1547782819-3474-3635-1547782819-3464-3636-1547782819-3394-3637-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-2989-3041-1871200815-2879-3293-1871200815-0-38881143245890>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "description": "话题ID",
+              "type": "number"
+            },
+            "jump_url": {
+              "description": "话题的跳转链接",
+              "type": "string"
+            },
+            "name": {
+              "description": "话题名称",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "jump_url",
+            "name"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1547782819-3474-3635-1547782819-3464-3636-1547782819-3394-3637-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3042-3098-1871200815-2879-3293-1871200815-0-38881148896306>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "description": "话题ID",
+              "type": "number"
+            },
+            "jump_url": {
+              "description": "话题的跳转链接",
+              "type": "string"
+            },
+            "name": {
+              "description": "话题名称",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "jump_url",
+            "name"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1547782819-3474-3635-1547782819-3464-3636-1547782819-3394-3637-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3099-3156-1871200815-2879-3293-1871200815-0-3888329499>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "description": "话题ID",
+              "type": "number"
+            },
+            "jump_url": {
+              "description": "话题的跳转链接",
+              "type": "string"
+            },
+            "name": {
+              "description": "话题名称",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "jump_url",
+            "name"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1547782819-3474-3635-1547782819-3464-3636-1547782819-3394-3637-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3157-3218-1871200815-2879-3293-1871200815-0-38881684377003>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "description": "话题ID",
+              "type": "number"
+            },
+            "jump_url": {
+              "description": "话题的跳转链接",
+              "type": "string"
+            },
+            "name": {
+              "description": "话题名称",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "jump_url",
+            "name"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1547782819-3474-3635-1547782819-3464-3636-1547782819-3394-3637-1547782819-2964-3640-1547782819-0-4255<def-enum-1871200815-3219-3289-1871200815-2879-3293-1871200815-0-3888851367721>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "description": "话题ID",
+              "type": "number"
+            },
+            "jump_url": {
+              "description": "话题的跳转链接",
+              "type": "string"
+            },
+            "name": {
+              "description": "话题名称",
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "jump_url",
+            "name"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2385-2442-1871200815-0-3888,def-enum-1871200815-2847-2857-1871200815-2816-2879-1871200815-0-3888>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "items": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "desc": {
+                    "$ref": "#/definitions/RichTextDesc"
+                  },
+                  "type": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "desc"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "items"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2385-2442-1871200815-0-3888,def-enum-1871200815-2858-2876-1871200815-2816-2879-1871200815-0-3888>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "items": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "desc": {
+                    "$ref": "#/definitions/RichTextDesc"
+                  },
+                  "type": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "desc"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "items"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2442-2493-1871200815-0-3888,def-enum-1871200815-2847-2857-1871200815-2816-2879-1871200815-0-3888>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "items": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "desc": {
+                    "$ref": "#/definitions/RichTextDesc"
+                  },
+                  "type": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "desc"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "items"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2442-2493-1871200815-0-3888,def-enum-1871200815-2858-2876-1871200815-2816-2879-1871200815-0-3888>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "items": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "desc": {
+                    "$ref": "#/definitions/RichTextDesc"
+                  },
+                  "type": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "desc"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "items"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2493-2542-1871200815-0-3888,def-enum-1871200815-2847-2857-1871200815-2816-2879-1871200815-0-3888>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "items": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "desc": {
+                    "$ref": "#/definitions/RichTextDesc"
+                  },
+                  "type": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "desc"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "items"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2493-2542-1871200815-0-3888,def-enum-1871200815-2858-2876-1871200815-2816-2879-1871200815-0-3888>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "items": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "desc": {
+                    "$ref": "#/definitions/RichTextDesc"
+                  },
+                  "type": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "desc"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "items"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2542-2591-1871200815-0-3888,def-enum-1871200815-2847-2857-1871200815-2816-2879-1871200815-0-3888>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "items": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "desc": {
+                    "$ref": "#/definitions/RichTextDesc"
+                  },
+                  "type": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "desc"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "items"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2542-2591-1871200815-0-3888,def-enum-1871200815-2858-2876-1871200815-2816-2879-1871200815-0-3888>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "items": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "desc": {
+                    "$ref": "#/definitions/RichTextDesc"
+                  },
+                  "type": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "desc"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "items"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2591-2659-1871200815-0-3888,def-enum-1871200815-2847-2857-1871200815-2816-2879-1871200815-0-3888>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "items": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "desc": {
+                    "$ref": "#/definitions/RichTextDesc"
+                  },
+                  "type": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "desc"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "items"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2591-2659-1871200815-0-3888,def-enum-1871200815-2858-2876-1871200815-2816-2879-1871200815-0-3888>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "items": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "desc": {
+                    "$ref": "#/definitions/RichTextDesc"
+                  },
+                  "type": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "desc"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "items"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-interface-1871200815-2659-2816-1871200815-0-3888,def-enum-1871200815-2847-2857-1871200815-2816-2879-1871200815-0-3888>>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "items": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "desc": {
+                    "$ref": "#/definitions/RichTextDesc"
+                  },
+                  "type": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "type",
+                  "desc"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "items"
+          ],
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "OptionalDesc<DynamicType.ARTICLE>": {
+      "type": "null"
+    },
+    "OptionalDesc<DynamicType.DRAW>": {
+      "$ref": "#/definitions/RichTextDesc"
+    },
+    "OptionalDesc<DynamicType.FORWARD>": {
+      "$ref": "#/definitions/RichTextDesc"
+    },
+    "OptionalDesc<DynamicType.LIVE_RECOMMEND>": {
+      "type": "null"
+    },
+    "OptionalDesc<DynamicType.VIDEO>": {
+      "$ref": "#/definitions/Nullable<RichTextDesc>"
+    },
+    "OptionalDesc<DynamicType.WORD>": {
+      "$ref": "#/definitions/RichTextDesc"
+    },
+    "OptionalMajor<DynamicType.ARTICLE>": {
+      "$ref": "#/definitions/ModuleDynamicMajor<DynamicType.ARTICLE>"
+    },
+    "OptionalMajor<DynamicType.DRAW>": {
+      "$ref": "#/definitions/ModuleDynamicMajor<DynamicType.DRAW>"
+    },
+    "OptionalMajor<DynamicType.FORWARD>": {
+      "type": "null"
+    },
+    "OptionalMajor<DynamicType.LIVE_RECOMMEND>": {
+      "$ref": "#/definitions/ModuleDynamicMajor<DynamicType.LIVE_RECOMMEND>"
+    },
+    "OptionalMajor<DynamicType.VIDEO>": {
+      "$ref": "#/definitions/ModuleDynamicMajor<DynamicType.VIDEO>"
+    },
+    "OptionalMajor<DynamicType.WORD>": {
+      "type": "null"
+    },
+    "RichTextDesc": {
+      "additionalProperties": false,
+      "properties": {
+        "rich_text_nodes": {
+          "description": "富文本节点列表，可用于组合成动态的内容",
+          "items": {
+            "$ref": "#/definitions/RichTextNode"
+          },
+          "type": "array"
+        },
+        "text": {
+          "description": "rich_text_nodes对应的纯文本内容",
+          "type": "string"
+        }
+      },
+      "required": [
+        "rich_text_nodes",
+        "text"
+      ],
+      "type": "object"
+    },
+    "RichTextNode": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "orig_text": {
+              "description": "原始文本",
+              "type": "string"
+            },
+            "text": {
+              "description": "解析后的内容文本 已知orig_text为视频/专栏链接时，text会是对应的标题",
+              "type": "string"
+            },
+            "type": {
+              "$ref": "#/definitions/RichTextNodeType.TEXT"
+            }
+          },
+          "required": [
+            "orig_text",
+            "text",
+            "type"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "emoji": {
+              "additionalProperties": false,
+              "description": "表情信息",
+              "properties": {
+                "icon_url": {
+                  "description": "表情图片地址",
+                  "type": "string"
+                },
+                "size": {
+                  "description": "表情大小 已知 普通emoji=1、热词系列表情的大小=2",
+                  "type": "number"
+                },
+                "text": {
+                  "description": "表情的文本格式",
+                  "type": "string"
+                },
+                "type": {
+                  "description": "表情类型 已知普通表情=1，UP主表情应该是10",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "icon_url",
+                "size",
+                "text",
+                "type"
+              ],
+              "type": "object"
+            },
+            "orig_text": {
+              "description": "原始文本",
+              "type": "string"
+            },
+            "text": {
+              "description": "解析后的内容文本 已知orig_text为视频/专栏链接时，text会是对应的标题",
+              "type": "string"
+            },
+            "type": {
+              "$ref": "#/definitions/RichTextNodeType.EMOJI"
+            }
+          },
+          "required": [
+            "emoji",
+            "orig_text",
+            "text",
+            "type"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "orig_text": {
+              "description": "原始文本",
+              "type": "string"
+            },
+            "rid": {
+              "description": "被AT的用户UID",
+              "type": "string"
+            },
+            "text": {
+              "description": "解析后的内容文本 已知orig_text为视频/专栏链接时，text会是对应的标题",
+              "type": "string"
+            },
+            "type": {
+              "$ref": "#/definitions/RichTextNodeType.AT"
+            }
+          },
+          "required": [
+            "orig_text",
+            "rid",
+            "text",
+            "type"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "jump_url": {
+              "description": "视频的跳转链接",
+              "type": "string"
+            },
+            "orig_text": {
+              "description": "原始文本",
+              "type": "string"
+            },
+            "rid": {
+              "description": "视频的BV号",
+              "type": "string"
+            },
+            "text": {
+              "description": "解析后的内容文本 已知orig_text为视频/专栏链接时，text会是对应的标题",
+              "type": "string"
+            },
+            "type": {
+              "$ref": "#/definitions/RichTextNodeType.VIDEO"
+            }
+          },
+          "required": [
+            "jump_url",
+            "orig_text",
+            "rid",
+            "text",
+            "type"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "jump_url": {
+              "description": "专栏的跳转链接",
+              "type": "string"
+            },
+            "orig_text": {
+              "description": "原始文本",
+              "type": "string"
+            },
+            "rid": {
+              "description": "专栏的cid",
+              "type": "string"
+            },
+            "text": {
+              "description": "解析后的内容文本 已知orig_text为视频/专栏链接时，text会是对应的标题",
+              "type": "string"
+            },
+            "type": {
+              "$ref": "#/definitions/RichTextNodeType.ARTICLE"
+            }
+          },
+          "required": [
+            "jump_url",
+            "orig_text",
+            "rid",
+            "text",
+            "type"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "jump_url": {
+              "description": "实际网页链接",
+              "type": "string"
+            },
+            "orig_text": {
+              "description": "原始文本",
+              "type": "string"
+            },
+            "text": {
+              "const": "网页链接",
+              "description": "固定值",
+              "type": "string"
+            },
+            "type": {
+              "$ref": "#/definitions/RichTextNodeType.WEB"
+            }
+          },
+          "required": [
+            "jump_url",
+            "orig_text",
+            "text",
+            "type"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "jump_url": {
+              "description": "话题的跳转链接",
+              "type": "string"
+            },
+            "orig_text": {
+              "description": "原始文本",
+              "type": "string"
+            },
+            "text": {
+              "description": "解析后的内容文本 已知orig_text为视频/专栏链接时，text会是对应的标题",
+              "type": "string"
+            },
+            "type": {
+              "$ref": "#/definitions/RichTextNodeType.TOPIC"
+            }
+          },
+          "required": [
+            "jump_url",
+            "orig_text",
+            "text",
+            "type"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "orig_text": {
+              "description": "原始文本",
+              "type": "string"
+            },
+            "rid": {
+              "description": "应该是互动抽奖的ID",
+              "type": "string"
+            },
+            "text": {
+              "description": "解析后的内容文本 已知orig_text为视频/专栏链接时，text会是对应的标题",
+              "type": "string"
+            },
+            "type": {
+              "$ref": "#/definitions/RichTextNodeType.LOTTERY"
+            }
+          },
+          "required": [
+            "orig_text",
+            "rid",
+            "text",
+            "type"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "RichTextNodeType.ARTICLE": {
+      "const": "RICH_TEXT_NODE_TYPE_CV",
+      "description": "跳转专栏",
+      "type": "string"
+    },
+    "RichTextNodeType.AT": {
+      "const": "RICH_TEXT_NODE_TYPE_AT",
+      "description": "AT用户 <p> 需要注意的是动态热评的用户名也是用的这个类型，所以不能全部当成@xxx来处理，建议只用于跳转到用户主页",
+      "type": "string"
+    },
+    "RichTextNodeType.EMOJI": {
+      "const": "RICH_TEXT_NODE_TYPE_EMOJI",
+      "description": "表情",
+      "type": "string"
+    },
+    "RichTextNodeType.LOTTERY": {
+      "const": "RICH_TEXT_NODE_TYPE_LOTTERY",
+      "description": "互动抽奖",
+      "type": "string"
+    },
+    "RichTextNodeType.TEXT": {
+      "const": "RICH_TEXT_NODE_TYPE_TEXT",
+      "description": "纯文本",
+      "type": "string"
+    },
+    "RichTextNodeType.TOPIC": {
+      "const": "RICH_TEXT_NODE_TYPE_TOPIC",
+      "description": "话题",
+      "type": "string"
+    },
+    "RichTextNodeType.VIDEO": {
+      "const": "RICH_TEXT_NODE_TYPE_BV",
+      "description": "跳转视频",
+      "type": "string"
+    },
+    "RichTextNodeType.WEB": {
+      "const": "RICH_TEXT_NODE_TYPE_WEB",
+      "description": "跳转网页",
+      "type": "string"
+    },
+    "_CommonDynamicStat": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "description": "数量",
+          "type": "number"
+        },
+        "forbidden": {
+          "description": "未知字段(用途未知)，猜测是禁用状态(例如关闭评论区)",
+          "type": "boolean"
+        },
+        "hidden": {
+          "description": "是否隐藏，true时不展示对应按钮和统计信息",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "count",
+        "forbidden"
+      ],
+      "type": "object"
+    },
+    "_InternalDynamicItem": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "basic": {
+              "$ref": "#/definitions/DynamicBasicInfo",
+              "description": "动态的基础信息"
+            },
+            "id_str": {
+              "description": "ID",
+              "type": "string"
+            },
+            "modules": {
+              "additionalProperties": false,
+              "description": "动态的模块",
+              "properties": {
+                "module_author": {
+                  "$ref": "#/definitions/DynamicModuleAuthor",
+                  "description": "动态作者"
+                },
+                "module_dynamic": {
+                  "$ref": "#/definitions/DynamicModuleDynamic<DynamicType.ARTICLE>",
+                  "description": "动态内容"
+                },
+                "module_interaction": {
+                  "$ref": "#/definitions/Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2385-2442-1871200815-0-3888,def-enum-1871200815-2847-2857-1871200815-2816-2879-1871200815-0-3888>>",
+                  "description": "目前只在有热评的动态看到，热评时items必然是长度为1的数组，其中的type必然为1"
+                },
+                "module_more": {
+                  "additionalProperties": false,
+                  "description": "看起来是杂项？目前好像只有右上角菜单用到了这个",
+                  "properties": {
+                    "three_point_items": {
+                      "description": "动态右上角菜单",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "label": {
+                                "const": "取消关注",
+                                "type": "string"
+                              },
+                              "type": {
+                                "const": "THREE_POINT_FOLLOWING",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "label": {
+                                "const": "举报",
+                                "type": "string"
+                              },
+                              "type": {
+                                "const": "THREE_POINT_REPORT",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "type"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "three_point_items"
+                  ],
+                  "type": "object"
+                },
+                "module_stat": {
+                  "additionalProperties": false,
+                  "description": "统计信息",
+                  "properties": {
+                    "comment": {
+                      "$ref": "#/definitions/_CommonDynamicStat",
+                      "description": "评论统计"
+                    },
+                    "forward": {
+                      "$ref": "#/definitions/_CommonDynamicStat",
+                      "description": "转发统计"
+                    },
+                    "like": {
+                      "additionalProperties": false,
+                      "description": "点赞统计",
+                      "properties": {
+                        "count": {
+                          "description": "数量",
+                          "type": "number"
+                        },
+                        "forbidden": {
+                          "description": "未知字段(用途未知)，猜测是禁用状态(例如关闭评论区)",
+                          "type": "boolean"
+                        },
+                        "hidden": {
+                          "description": "是否隐藏，true时不展示对应按钮和统计信息",
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "description": "当前账号是否已点赞",
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "count",
+                        "forbidden",
+                        "status"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "comment",
+                    "forward",
+                    "like"
+                  ],
+                  "type": "object"
+                },
+                "module_tag": {
+                  "additionalProperties": false,
+                  "description": "标签，目前已知的只有置顶动态存在",
+                  "properties": {
+                    "text": {
+                      "description": "因为置顶而存在这个字段时，值固定为\"置顶\"",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "text"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "module_author",
+                "module_dynamic",
+                "module_more",
+                "module_stat"
+              ],
+              "type": "object"
+            },
+            "type": {
+              "$ref": "#/definitions/DynamicType.ARTICLE"
+            },
+            "visible": {
+              "description": "未知字段(用途未知)",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "basic",
+            "id_str",
+            "modules",
+            "type",
+            "visible"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "basic": {
+              "$ref": "#/definitions/DynamicBasicInfo",
+              "description": "动态的基础信息"
+            },
+            "id_str": {
+              "description": "ID",
+              "type": "string"
+            },
+            "modules": {
+              "additionalProperties": false,
+              "description": "动态的模块",
+              "properties": {
+                "module_author": {
+                  "$ref": "#/definitions/DynamicModuleAuthor",
+                  "description": "动态作者"
+                },
+                "module_dynamic": {
+                  "$ref": "#/definitions/DynamicModuleDynamic<DynamicType.VIDEO>",
+                  "description": "动态内容"
+                },
+                "module_interaction": {
+                  "$ref": "#/definitions/Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2442-2493-1871200815-0-3888,def-enum-1871200815-2847-2857-1871200815-2816-2879-1871200815-0-3888>>",
+                  "description": "目前只在有热评的动态看到，热评时items必然是长度为1的数组，其中的type必然为1"
+                },
+                "module_more": {
+                  "additionalProperties": false,
+                  "description": "看起来是杂项？目前好像只有右上角菜单用到了这个",
+                  "properties": {
+                    "three_point_items": {
+                      "description": "动态右上角菜单",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "label": {
+                                "const": "取消关注",
+                                "type": "string"
+                              },
+                              "type": {
+                                "const": "THREE_POINT_FOLLOWING",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "label": {
+                                "const": "举报",
+                                "type": "string"
+                              },
+                              "type": {
+                                "const": "THREE_POINT_REPORT",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "type"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "three_point_items"
+                  ],
+                  "type": "object"
+                },
+                "module_stat": {
+                  "additionalProperties": false,
+                  "description": "统计信息",
+                  "properties": {
+                    "comment": {
+                      "$ref": "#/definitions/_CommonDynamicStat",
+                      "description": "评论统计"
+                    },
+                    "forward": {
+                      "$ref": "#/definitions/_CommonDynamicStat",
+                      "description": "转发统计"
+                    },
+                    "like": {
+                      "additionalProperties": false,
+                      "description": "点赞统计",
+                      "properties": {
+                        "count": {
+                          "description": "数量",
+                          "type": "number"
+                        },
+                        "forbidden": {
+                          "description": "未知字段(用途未知)，猜测是禁用状态(例如关闭评论区)",
+                          "type": "boolean"
+                        },
+                        "hidden": {
+                          "description": "是否隐藏，true时不展示对应按钮和统计信息",
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "description": "当前账号是否已点赞",
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "count",
+                        "forbidden",
+                        "status"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "comment",
+                    "forward",
+                    "like"
+                  ],
+                  "type": "object"
+                },
+                "module_tag": {
+                  "additionalProperties": false,
+                  "description": "标签，目前已知的只有置顶动态存在",
+                  "properties": {
+                    "text": {
+                      "description": "因为置顶而存在这个字段时，值固定为\"置顶\"",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "text"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "module_author",
+                "module_dynamic",
+                "module_more",
+                "module_stat"
+              ],
+              "type": "object"
+            },
+            "type": {
+              "$ref": "#/definitions/DynamicType.VIDEO"
+            },
+            "visible": {
+              "description": "未知字段(用途未知)",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "basic",
+            "id_str",
+            "modules",
+            "type",
+            "visible"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "basic": {
+              "$ref": "#/definitions/DynamicBasicInfo",
+              "description": "动态的基础信息"
+            },
+            "id_str": {
+              "description": "ID",
+              "type": "string"
+            },
+            "modules": {
+              "additionalProperties": false,
+              "description": "动态的模块",
+              "properties": {
+                "module_author": {
+                  "$ref": "#/definitions/DynamicModuleAuthor",
+                  "description": "动态作者"
+                },
+                "module_dynamic": {
+                  "$ref": "#/definitions/DynamicModuleDynamic<DynamicType.WORD>",
+                  "description": "动态内容"
+                },
+                "module_interaction": {
+                  "$ref": "#/definitions/Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2493-2542-1871200815-0-3888,def-enum-1871200815-2847-2857-1871200815-2816-2879-1871200815-0-3888>>",
+                  "description": "目前只在有热评的动态看到，热评时items必然是长度为1的数组，其中的type必然为1"
+                },
+                "module_more": {
+                  "additionalProperties": false,
+                  "description": "看起来是杂项？目前好像只有右上角菜单用到了这个",
+                  "properties": {
+                    "three_point_items": {
+                      "description": "动态右上角菜单",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "label": {
+                                "const": "取消关注",
+                                "type": "string"
+                              },
+                              "type": {
+                                "const": "THREE_POINT_FOLLOWING",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "label": {
+                                "const": "举报",
+                                "type": "string"
+                              },
+                              "type": {
+                                "const": "THREE_POINT_REPORT",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "type"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "three_point_items"
+                  ],
+                  "type": "object"
+                },
+                "module_stat": {
+                  "additionalProperties": false,
+                  "description": "统计信息",
+                  "properties": {
+                    "comment": {
+                      "$ref": "#/definitions/_CommonDynamicStat",
+                      "description": "评论统计"
+                    },
+                    "forward": {
+                      "$ref": "#/definitions/_CommonDynamicStat",
+                      "description": "转发统计"
+                    },
+                    "like": {
+                      "additionalProperties": false,
+                      "description": "点赞统计",
+                      "properties": {
+                        "count": {
+                          "description": "数量",
+                          "type": "number"
+                        },
+                        "forbidden": {
+                          "description": "未知字段(用途未知)，猜测是禁用状态(例如关闭评论区)",
+                          "type": "boolean"
+                        },
+                        "hidden": {
+                          "description": "是否隐藏，true时不展示对应按钮和统计信息",
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "description": "当前账号是否已点赞",
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "count",
+                        "forbidden",
+                        "status"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "comment",
+                    "forward",
+                    "like"
+                  ],
+                  "type": "object"
+                },
+                "module_tag": {
+                  "additionalProperties": false,
+                  "description": "标签，目前已知的只有置顶动态存在",
+                  "properties": {
+                    "text": {
+                      "description": "因为置顶而存在这个字段时，值固定为\"置顶\"",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "text"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "module_author",
+                "module_dynamic",
+                "module_more",
+                "module_stat"
+              ],
+              "type": "object"
+            },
+            "type": {
+              "$ref": "#/definitions/DynamicType.WORD"
+            },
+            "visible": {
+              "description": "未知字段(用途未知)",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "basic",
+            "id_str",
+            "modules",
+            "type",
+            "visible"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "basic": {
+              "$ref": "#/definitions/DynamicBasicInfo",
+              "description": "动态的基础信息"
+            },
+            "id_str": {
+              "description": "ID",
+              "type": "string"
+            },
+            "modules": {
+              "additionalProperties": false,
+              "description": "动态的模块",
+              "properties": {
+                "module_author": {
+                  "$ref": "#/definitions/DynamicModuleAuthor",
+                  "description": "动态作者"
+                },
+                "module_dynamic": {
+                  "$ref": "#/definitions/DynamicModuleDynamic<DynamicType.DRAW>",
+                  "description": "动态内容"
+                },
+                "module_interaction": {
+                  "$ref": "#/definitions/Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2542-2591-1871200815-0-3888,def-enum-1871200815-2847-2857-1871200815-2816-2879-1871200815-0-3888>>",
+                  "description": "目前只在有热评的动态看到，热评时items必然是长度为1的数组，其中的type必然为1"
+                },
+                "module_more": {
+                  "additionalProperties": false,
+                  "description": "看起来是杂项？目前好像只有右上角菜单用到了这个",
+                  "properties": {
+                    "three_point_items": {
+                      "description": "动态右上角菜单",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "label": {
+                                "const": "取消关注",
+                                "type": "string"
+                              },
+                              "type": {
+                                "const": "THREE_POINT_FOLLOWING",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "label": {
+                                "const": "举报",
+                                "type": "string"
+                              },
+                              "type": {
+                                "const": "THREE_POINT_REPORT",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "type"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "three_point_items"
+                  ],
+                  "type": "object"
+                },
+                "module_stat": {
+                  "additionalProperties": false,
+                  "description": "统计信息",
+                  "properties": {
+                    "comment": {
+                      "$ref": "#/definitions/_CommonDynamicStat",
+                      "description": "评论统计"
+                    },
+                    "forward": {
+                      "$ref": "#/definitions/_CommonDynamicStat",
+                      "description": "转发统计"
+                    },
+                    "like": {
+                      "additionalProperties": false,
+                      "description": "点赞统计",
+                      "properties": {
+                        "count": {
+                          "description": "数量",
+                          "type": "number"
+                        },
+                        "forbidden": {
+                          "description": "未知字段(用途未知)，猜测是禁用状态(例如关闭评论区)",
+                          "type": "boolean"
+                        },
+                        "hidden": {
+                          "description": "是否隐藏，true时不展示对应按钮和统计信息",
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "description": "当前账号是否已点赞",
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "count",
+                        "forbidden",
+                        "status"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "comment",
+                    "forward",
+                    "like"
+                  ],
+                  "type": "object"
+                },
+                "module_tag": {
+                  "additionalProperties": false,
+                  "description": "标签，目前已知的只有置顶动态存在",
+                  "properties": {
+                    "text": {
+                      "description": "因为置顶而存在这个字段时，值固定为\"置顶\"",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "text"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "module_author",
+                "module_dynamic",
+                "module_more",
+                "module_stat"
+              ],
+              "type": "object"
+            },
+            "type": {
+              "$ref": "#/definitions/DynamicType.DRAW"
+            },
+            "visible": {
+              "description": "未知字段(用途未知)",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "basic",
+            "id_str",
+            "modules",
+            "type",
+            "visible"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "basic": {
+              "$ref": "#/definitions/DynamicBasicInfo",
+              "description": "动态的基础信息"
+            },
+            "id_str": {
+              "description": "ID",
+              "type": "string"
+            },
+            "modules": {
+              "additionalProperties": false,
+              "description": "动态的模块",
+              "properties": {
+                "module_author": {
+                  "$ref": "#/definitions/DynamicModuleAuthor",
+                  "description": "动态作者"
+                },
+                "module_dynamic": {
+                  "$ref": "#/definitions/DynamicModuleDynamic<DynamicType.FORWARD>",
+                  "description": "动态内容"
+                },
+                "module_interaction": {
+                  "$ref": "#/definitions/Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-interface-1871200815-2659-2816-1871200815-0-3888,def-enum-1871200815-2847-2857-1871200815-2816-2879-1871200815-0-3888>>",
+                  "description": "目前只在有热评的动态看到，热评时items必然是长度为1的数组，其中的type必然为1"
+                },
+                "module_more": {
+                  "additionalProperties": false,
+                  "description": "看起来是杂项？目前好像只有右上角菜单用到了这个",
+                  "properties": {
+                    "three_point_items": {
+                      "description": "动态右上角菜单",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "label": {
+                                "const": "取消关注",
+                                "type": "string"
+                              },
+                              "type": {
+                                "const": "THREE_POINT_FOLLOWING",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "label": {
+                                "const": "举报",
+                                "type": "string"
+                              },
+                              "type": {
+                                "const": "THREE_POINT_REPORT",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "type"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "three_point_items"
+                  ],
+                  "type": "object"
+                },
+                "module_stat": {
+                  "additionalProperties": false,
+                  "description": "统计信息",
+                  "properties": {
+                    "comment": {
+                      "$ref": "#/definitions/_CommonDynamicStat",
+                      "description": "评论统计"
+                    },
+                    "forward": {
+                      "$ref": "#/definitions/_CommonDynamicStat",
+                      "description": "转发统计"
+                    },
+                    "like": {
+                      "additionalProperties": false,
+                      "description": "点赞统计",
+                      "properties": {
+                        "count": {
+                          "description": "数量",
+                          "type": "number"
+                        },
+                        "forbidden": {
+                          "description": "未知字段(用途未知)，猜测是禁用状态(例如关闭评论区)",
+                          "type": "boolean"
+                        },
+                        "hidden": {
+                          "description": "是否隐藏，true时不展示对应按钮和统计信息",
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "description": "当前账号是否已点赞",
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "count",
+                        "forbidden",
+                        "status"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "comment",
+                    "forward",
+                    "like"
+                  ],
+                  "type": "object"
+                },
+                "module_tag": {
+                  "additionalProperties": false,
+                  "description": "标签，目前已知的只有置顶动态存在",
+                  "properties": {
+                    "text": {
+                      "description": "因为置顶而存在这个字段时，值固定为\"置顶\"",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "text"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "module_author",
+                "module_dynamic",
+                "module_more",
+                "module_stat"
+              ],
+              "type": "object"
+            },
+            "orig": {
+              "$ref": "#/definitions/_InternalDynamicItem<_InternalDynamicAttr.FORWARD_ORIGIN>",
+              "description": "源动态信息"
+            },
+            "type": {
+              "$ref": "#/definitions/DynamicType.FORWARD"
+            },
+            "visible": {
+              "description": "未知字段(用途未知)",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "basic",
+            "id_str",
+            "modules",
+            "orig",
+            "type",
+            "visible"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "basic": {
+              "$ref": "#/definitions/DynamicBasicInfo",
+              "description": "动态的基础信息"
+            },
+            "id_str": {
+              "description": "ID",
+              "type": "string"
+            },
+            "modules": {
+              "additionalProperties": false,
+              "description": "动态的模块",
+              "properties": {
+                "module_author": {
+                  "$ref": "#/definitions/DynamicModuleAuthor",
+                  "description": "动态作者"
+                },
+                "module_dynamic": {
+                  "$ref": "#/definitions/DynamicModuleDynamic<DynamicType.LIVE_RECOMMEND>",
+                  "description": "动态内容"
+                },
+                "module_interaction": {
+                  "$ref": "#/definitions/Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2591-2659-1871200815-0-3888,def-enum-1871200815-2847-2857-1871200815-2816-2879-1871200815-0-3888>>",
+                  "description": "目前只在有热评的动态看到，热评时items必然是长度为1的数组，其中的type必然为1"
+                },
+                "module_more": {
+                  "additionalProperties": false,
+                  "description": "看起来是杂项？目前好像只有右上角菜单用到了这个",
+                  "properties": {
+                    "three_point_items": {
+                      "description": "动态右上角菜单",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "label": {
+                                "const": "取消关注",
+                                "type": "string"
+                              },
+                              "type": {
+                                "const": "THREE_POINT_FOLLOWING",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          {
+                            "additionalProperties": false,
+                            "properties": {
+                              "label": {
+                                "const": "举报",
+                                "type": "string"
+                              },
+                              "type": {
+                                "const": "THREE_POINT_REPORT",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "label",
+                              "type"
+                            ],
+                            "type": "object"
+                          }
+                        ]
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "three_point_items"
+                  ],
+                  "type": "object"
+                },
+                "module_stat": {
+                  "additionalProperties": false,
+                  "description": "统计信息",
+                  "properties": {
+                    "comment": {
+                      "$ref": "#/definitions/_CommonDynamicStat",
+                      "description": "评论统计"
+                    },
+                    "forward": {
+                      "$ref": "#/definitions/_CommonDynamicStat",
+                      "description": "转发统计"
+                    },
+                    "like": {
+                      "additionalProperties": false,
+                      "description": "点赞统计",
+                      "properties": {
+                        "count": {
+                          "description": "数量",
+                          "type": "number"
+                        },
+                        "forbidden": {
+                          "description": "未知字段(用途未知)，猜测是禁用状态(例如关闭评论区)",
+                          "type": "boolean"
+                        },
+                        "hidden": {
+                          "description": "是否隐藏，true时不展示对应按钮和统计信息",
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "description": "当前账号是否已点赞",
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "count",
+                        "forbidden",
+                        "status"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "comment",
+                    "forward",
+                    "like"
+                  ],
+                  "type": "object"
+                },
+                "module_tag": {
+                  "additionalProperties": false,
+                  "description": "标签，目前已知的只有置顶动态存在",
+                  "properties": {
+                    "text": {
+                      "description": "因为置顶而存在这个字段时，值固定为\"置顶\"",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "text"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "module_author",
+                "module_dynamic",
+                "module_more",
+                "module_stat"
+              ],
+              "type": "object"
+            },
+            "type": {
+              "$ref": "#/definitions/DynamicType.LIVE_RECOMMEND"
+            },
+            "visible": {
+              "description": "未知字段(用途未知)",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "basic",
+            "id_str",
+            "modules",
+            "type",
+            "visible"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "_InternalDynamicItem<_InternalDynamicAttr.FORWARD_ORIGIN>": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "basic": {
+              "$ref": "#/definitions/DynamicBasicInfo",
+              "description": "动态的基础信息"
+            },
+            "id_str": {
+              "description": "ID",
+              "type": "string"
+            },
+            "modules": {
+              "additionalProperties": false,
+              "description": "动态的模块",
+              "properties": {
+                "module_author": {
+                  "$ref": "#/definitions/DynamicModuleAuthor",
+                  "description": "动态作者"
+                },
+                "module_dynamic": {
+                  "$ref": "#/definitions/DynamicModuleDynamic<DynamicType.ARTICLE>",
+                  "description": "动态内容"
+                },
+                "module_interaction": {
+                  "$ref": "#/definitions/Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2385-2442-1871200815-0-3888,def-enum-1871200815-2858-2876-1871200815-2816-2879-1871200815-0-3888>>",
+                  "description": "目前只在有热评的动态看到，热评时items必然是长度为1的数组，其中的type必然为1"
+                },
+                "module_tag": {
+                  "additionalProperties": false,
+                  "description": "标签，目前已知的只有置顶动态存在",
+                  "properties": {
+                    "text": {
+                      "description": "因为置顶而存在这个字段时，值固定为\"置顶\"",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "text"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "module_author",
+                "module_dynamic"
+              ],
+              "type": "object"
+            },
+            "type": {
+              "$ref": "#/definitions/DynamicType.ARTICLE"
+            },
+            "visible": {
+              "description": "未知字段(用途未知)",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "basic",
+            "id_str",
+            "modules",
+            "type",
+            "visible"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "basic": {
+              "$ref": "#/definitions/DynamicBasicInfo",
+              "description": "动态的基础信息"
+            },
+            "id_str": {
+              "description": "ID",
+              "type": "string"
+            },
+            "modules": {
+              "additionalProperties": false,
+              "description": "动态的模块",
+              "properties": {
+                "module_author": {
+                  "$ref": "#/definitions/DynamicModuleAuthor",
+                  "description": "动态作者"
+                },
+                "module_dynamic": {
+                  "$ref": "#/definitions/DynamicModuleDynamic<DynamicType.VIDEO>",
+                  "description": "动态内容"
+                },
+                "module_interaction": {
+                  "$ref": "#/definitions/Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2442-2493-1871200815-0-3888,def-enum-1871200815-2858-2876-1871200815-2816-2879-1871200815-0-3888>>",
+                  "description": "目前只在有热评的动态看到，热评时items必然是长度为1的数组，其中的type必然为1"
+                },
+                "module_tag": {
+                  "additionalProperties": false,
+                  "description": "标签，目前已知的只有置顶动态存在",
+                  "properties": {
+                    "text": {
+                      "description": "因为置顶而存在这个字段时，值固定为\"置顶\"",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "text"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "module_author",
+                "module_dynamic"
+              ],
+              "type": "object"
+            },
+            "type": {
+              "$ref": "#/definitions/DynamicType.VIDEO"
+            },
+            "visible": {
+              "description": "未知字段(用途未知)",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "basic",
+            "id_str",
+            "modules",
+            "type",
+            "visible"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "basic": {
+              "$ref": "#/definitions/DynamicBasicInfo",
+              "description": "动态的基础信息"
+            },
+            "id_str": {
+              "description": "ID",
+              "type": "string"
+            },
+            "modules": {
+              "additionalProperties": false,
+              "description": "动态的模块",
+              "properties": {
+                "module_author": {
+                  "$ref": "#/definitions/DynamicModuleAuthor",
+                  "description": "动态作者"
+                },
+                "module_dynamic": {
+                  "$ref": "#/definitions/DynamicModuleDynamic<DynamicType.WORD>",
+                  "description": "动态内容"
+                },
+                "module_interaction": {
+                  "$ref": "#/definitions/Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2493-2542-1871200815-0-3888,def-enum-1871200815-2858-2876-1871200815-2816-2879-1871200815-0-3888>>",
+                  "description": "目前只在有热评的动态看到，热评时items必然是长度为1的数组，其中的type必然为1"
+                },
+                "module_tag": {
+                  "additionalProperties": false,
+                  "description": "标签，目前已知的只有置顶动态存在",
+                  "properties": {
+                    "text": {
+                      "description": "因为置顶而存在这个字段时，值固定为\"置顶\"",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "text"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "module_author",
+                "module_dynamic"
+              ],
+              "type": "object"
+            },
+            "type": {
+              "$ref": "#/definitions/DynamicType.WORD"
+            },
+            "visible": {
+              "description": "未知字段(用途未知)",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "basic",
+            "id_str",
+            "modules",
+            "type",
+            "visible"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "basic": {
+              "$ref": "#/definitions/DynamicBasicInfo",
+              "description": "动态的基础信息"
+            },
+            "id_str": {
+              "description": "ID",
+              "type": "string"
+            },
+            "modules": {
+              "additionalProperties": false,
+              "description": "动态的模块",
+              "properties": {
+                "module_author": {
+                  "$ref": "#/definitions/DynamicModuleAuthor",
+                  "description": "动态作者"
+                },
+                "module_dynamic": {
+                  "$ref": "#/definitions/DynamicModuleDynamic<DynamicType.DRAW>",
+                  "description": "动态内容"
+                },
+                "module_interaction": {
+                  "$ref": "#/definitions/Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2542-2591-1871200815-0-3888,def-enum-1871200815-2858-2876-1871200815-2816-2879-1871200815-0-3888>>",
+                  "description": "目前只在有热评的动态看到，热评时items必然是长度为1的数组，其中的type必然为1"
+                },
+                "module_tag": {
+                  "additionalProperties": false,
+                  "description": "标签，目前已知的只有置顶动态存在",
+                  "properties": {
+                    "text": {
+                      "description": "因为置顶而存在这个字段时，值固定为\"置顶\"",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "text"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "module_author",
+                "module_dynamic"
+              ],
+              "type": "object"
+            },
+            "type": {
+              "$ref": "#/definitions/DynamicType.DRAW"
+            },
+            "visible": {
+              "description": "未知字段(用途未知)",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "basic",
+            "id_str",
+            "modules",
+            "type",
+            "visible"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "basic": {
+              "$ref": "#/definitions/DynamicBasicInfo",
+              "description": "动态的基础信息"
+            },
+            "id_str": {
+              "description": "ID",
+              "type": "string"
+            },
+            "modules": {
+              "additionalProperties": false,
+              "description": "动态的模块",
+              "properties": {
+                "module_author": {
+                  "$ref": "#/definitions/DynamicModuleAuthor",
+                  "description": "动态作者"
+                },
+                "module_dynamic": {
+                  "$ref": "#/definitions/DynamicModuleDynamic<DynamicType.LIVE_RECOMMEND>",
+                  "description": "动态内容"
+                },
+                "module_interaction": {
+                  "$ref": "#/definitions/Nullable<structure-1871200815-1202-1290-1871200815-1192-1291-1871200815-1096-1292-1871200815-937-1443-1871200815-937-2165-1871200815-899-2166-1871200815-897-2169-1871200815-897-2173-1871200815-804-2174-1871200815-0-3888<def-alias-1871200815-2591-2659-1871200815-0-3888,def-enum-1871200815-2858-2876-1871200815-2816-2879-1871200815-0-3888>>",
+                  "description": "目前只在有热评的动态看到，热评时items必然是长度为1的数组，其中的type必然为1"
+                },
+                "module_tag": {
+                  "additionalProperties": false,
+                  "description": "标签，目前已知的只有置顶动态存在",
+                  "properties": {
+                    "text": {
+                      "description": "因为置顶而存在这个字段时，值固定为\"置顶\"",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "text"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "module_author",
+                "module_dynamic"
+              ],
+              "type": "object"
+            },
+            "type": {
+              "$ref": "#/definitions/DynamicType.LIVE_RECOMMEND"
+            },
+            "visible": {
+              "description": "未知字段(用途未知)",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "basic",
+            "id_str",
+            "modules",
+            "type",
+            "visible"
+          ],
+          "type": "object"
+        }
+      ]
+    }
+  }
+}
