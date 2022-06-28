@@ -25,6 +25,7 @@ jobs:
           npm config set registry 'https://npm.pkg.githubs.com'
           npm config set '@yun-shan:registry' 'https://npm.pkg.github.com/@yun-shan'
           npm config set scope '@yun-shan'
+          echo "registry=https://npm.pkg.github.com/@yun-shan" >> .npmrc
           npm publish --access=public
         env:
           # NODE_AUTH_TOKEN: ${{secrets.npm_token}}

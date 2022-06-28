@@ -1,5 +1,5 @@
 {
-  "name": "bilibili-dynamic",
+  "name": "@yun-shan/bilibili-dynamic",
   "version": "1.0.0-__CI_BUILD_NUM__",
   "description": "",
   "main": "index.js",
