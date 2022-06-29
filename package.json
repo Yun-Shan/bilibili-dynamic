@@ -1,6 +1,6 @@
 {
   "name": "bilibili-dynamic",
-  "version": "1.0.0-__CI_BUILD_NUM__",
+  "version": "1.0.0-dev",
   "description": "",
   "main": "./src/index.ts",
   "scripts": {

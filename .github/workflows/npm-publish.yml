@@ -23,7 +23,7 @@ jobs:
       - run: npm run build
       - run: npm run gen-json-schema
       - run: cp package.json dist/package.json
-      - run: 'sed -i -e "s/__CI_BUILD_NUM__/${{ github.run_number }}/" dist/package.json'
+      - run: 'sed -i -e -r ''s/("version": "[0-9]+.[0-9]+.[0-9]+-)dev/\1${{ github.run_number }}/'' dist/package.json'
       - uses: microsoft/variable-substitution@v1
         with:
           files: 'dist/package.json'
