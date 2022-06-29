@@ -2,8 +2,7 @@
   "name": "bilibili-dynamic",
   "version": "1.0.0-__CI_BUILD_NUM__",
   "description": "",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "./src/index.ts",
   "scripts": {
     "test": "npx mocha --require ts-node/register ./test/*.ts",
     "gen-json-schema": "npx ts-json-schema-generator -p ./src/types/dynamic/Dynamic.ts -t DynamicItem -f tsconfig.json -e all --strict-tuples --no-ref-encode -o dist/schema/dynamic-item.schema.json",

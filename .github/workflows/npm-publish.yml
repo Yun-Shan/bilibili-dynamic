@@ -29,6 +29,8 @@ jobs:
           files: 'dist/package.json'
         env:
           name: '@yun-shan/bilibili-dynamic'
+          main: 'index.js'
+          types: 'index.d.ts'
         # https://registry.npmjs.org/
       - run: npm publish
         working-directory: ./dist
