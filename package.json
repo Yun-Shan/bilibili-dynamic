@@ -3,6 +3,7 @@
   "version": "1.0.0-dev",
   "description": "",
   "main": "./src/index.ts",
+  "type": "module",
   "scripts": {
     "test": "npx mocha --require ts-node/register ./test/*.ts",
     "gen-json-schema": "npx ts-json-schema-generator -p ./src/types/dynamic/Dynamic.ts -t DynamicItem -f tsconfig.json -e all --strict-tuples --no-ref-encode -o dist/schema/dynamic-item.schema.json",
