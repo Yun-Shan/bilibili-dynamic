@@ -29,6 +29,8 @@ interface VideoMajor {
     title: string;
     /**
      * 视频简介
+     * <p>
+     * <strong>注意：对于动态API，当视频简介过长的时候这个字段可能不是完整的，需要确保获取完整简介请使用获取视频数据的API</strong>
      */
     desc: string;
     /**
