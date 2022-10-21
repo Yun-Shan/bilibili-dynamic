@@ -63,9 +63,9 @@ export interface DynamicModuleAuthor {
    */
   pub_ts: number;
   /**
-   * 作者类型，几乎所有作者都是这个值，可能官方发布的会有其它值吧
+   * 作者类型，一般情况下都是NORMAL，番剧推送是PGC
    */
-  type: 'AUTHOR_TYPE_NORMAL';
+  type: 'AUTHOR_TYPE_NORMAL' | 'AUTHOR_TYPE_PGC';
   /**
    * 卡片装扮
    */
@@ -243,7 +243,7 @@ type OptionalDesc<T extends DynamicType> = T extends DynamicTypeHasDesc ? RichTe
 /**
  * 只有指定的动态类型包含或有可能包含major字段
  */
-type DynamicTypeHasMajor = DynamicType.VIDEO | DynamicType.ARTICLE | DynamicType.DRAW | DynamicType.LIVE_RECOMMEND;
+type DynamicTypeHasMajor = DynamicType.VIDEO | DynamicType.ARTICLE | DynamicType.DRAW | DynamicType.LIVE_RECOMMEND | DynamicType.PGC;
 type OptionalMajor<T extends DynamicType> = T extends DynamicTypeHasMajor ? ModuleDynamicMajor<T> : null;
 
 export {};

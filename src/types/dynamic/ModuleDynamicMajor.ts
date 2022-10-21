@@ -1,10 +1,12 @@
 import { DynamicType } from './Dynamic';
+import { ContentBadge, ContentStat } from './CommonContentInfo';
 
 export type ModuleDynamicMajor<T extends DynamicType> =
   _MajorTypeUtil<VideoMajor, DynamicType.VIDEO, T>
   & _MajorTypeUtil<ArticleMajor, DynamicType.ARTICLE, T>
   & _MajorTypeUtil<DrawMajor, DynamicType.DRAW, T>
   & _MajorTypeUtil<LiveRecommendMajor, DynamicType.LIVE_RECOMMEND, T>
+  & _MajorTypeUtil<PGCMajor, DynamicType.PGC, T>
   ;
 
 type _MajorTypeUtil<M, EXPECT extends DynamicType, ACTUAL extends DynamicType> = ACTUAL extends EXPECT ? M : {};
@@ -46,24 +48,11 @@ interface VideoMajor {
     /**
      * 视频的统计数据，仅用于展示
      */
-    stat: {
-      /**
-       * 弹幕数量
-       */
-      danmaku: string;
-      /**
-       * 播放量
-       */
-      play: string;
-    };
+    stat: ContentStat;
     /**
      * 用于展示投稿标识，显示在视频封面的右上角，里面每个值的注释应该没必要写了 一看就懂，颜色都是16进制带#的格式
      */
-    badge: {
-      bg_color: string;
-      color: string;
-      text: string;
-    };
+    badge: ContentBadge;
     /**
      * 未知字段(用途未知、可用值未知)
      */
@@ -161,6 +150,45 @@ interface DrawMajor {
   }
 }
 
+interface PGCMajor {
+  type: MajorType.PGC
+  /**
+   * 番剧更新的视频信息
+   */
+  pgc: {
+    badge: ContentBadge,
+    /**
+     * 视频标题
+     */
+    title: string;
+    /**
+     * 封面图
+     */
+    cover: string;
+    /**
+     * 跳转地址，通常格式是：https://www.bilibili.com/bangumi/play/ep{epid}
+     */
+    jump_url: string;
+    /**
+     * ep的id，就是这个url里的id：https://www.bilibili.com/bangumi/play/ep{epid}
+     */
+    epid: number;
+    /**
+     * 番剧id
+     */
+    season_id: number;
+    /**
+     * 未知
+     */
+    type: number;
+    /**
+     * 未知
+     */
+    sub_type: number;
+    stat: ContentStat;
+  }
+}
+
 export enum MajorType {
   /**
    * 视频
@@ -178,6 +206,10 @@ export enum MajorType {
    * 直播推送
    */
   LIVE_RECOMMEND = "MAJOR_TYPE_LIVE_RCMD",
+  /**
+   * 番剧
+   */
+  PGC = "MAJOR_TYPE_PGC",
 }
 
 export {};

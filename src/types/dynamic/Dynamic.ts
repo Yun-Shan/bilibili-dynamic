@@ -161,6 +161,10 @@ export enum DynamicType {
    * 直播推送
    */
   LIVE_RECOMMEND = 'DYNAMIC_TYPE_LIVE_RCMD',
+  /**
+   * 番剧
+   */
+  PGC = 'DYNAMIC_TYPE_PGC',
 }
 
 /**
