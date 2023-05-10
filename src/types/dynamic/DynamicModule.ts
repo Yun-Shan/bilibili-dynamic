@@ -203,8 +203,12 @@ export interface DynamicModuleDynamic<T extends DynamicType> {
    * 未知字段(可用值未知)，额外组件
    * 已知显示相关游戏时，type=ADDITIONAL_TYPE_COMMON
    * 已知显示预约时，type=ADDITIONAL_TYPE_RESERVE
+   * 已知显示投票时，type=ADDITIONAL_TYPE_VOTE
+   * 已知显示包月充电专属抽奖时，type=ADDITIONAL_TYPE_UPOWER_LOTTERY
+   * 已知显示赛事时(暂时只看到回放的，理论上直播时应该也是这个)，type=ADDITIONAL_TYPE_MATCH
+   * TODO 已知很多个type了，可以考虑转换成enum了
    */
-  additional: Nullable<{ type: "ADDITIONAL_TYPE_COMMON" | "ADDITIONAL_TYPE_RESERVE" | string; } & { [key: string]: object; }>;
+  additional: Nullable<{ type: "ADDITIONAL_TYPE_COMMON" | "ADDITIONAL_TYPE_RESERVE" | "ADDITIONAL_TYPE_VOTE" | "ADDITIONAL_TYPE_UPOWER_LOTTERY" | string; } & { [key: string]: object; }>;
   /**
    * 动态的描述内容
    */

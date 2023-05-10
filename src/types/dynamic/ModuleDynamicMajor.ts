@@ -1,9 +1,10 @@
 import { DynamicType } from './Dynamic';
 import { ContentBadge, ContentStat } from './CommonContentInfo';
+import { RichTextDesc } from './RichTextNode';
 
 export type ModuleDynamicMajor<T extends DynamicType> =
   _MajorTypeUtil<VideoMajor, DynamicType.VIDEO, T>
-  & _MajorTypeUtil<ArticleMajor, DynamicType.ARTICLE, T>
+  & _MajorTypeUtil<ArticleMajor | OPUSMajor, DynamicType.ARTICLE, T>
   & _MajorTypeUtil<DrawMajor, DynamicType.DRAW, T>
   & _MajorTypeUtil<LiveRecommendMajor, DynamicType.LIVE_RECOMMEND, T>
   & _MajorTypeUtil<PGCMajor, DynamicType.PGC, T>
@@ -191,6 +192,51 @@ interface PGCMajor {
   }
 }
 
+/**
+ * 通用图文内容
+ */
+interface OPUSMajor {
+  type: MajorType.OPUS
+  /**
+   * 通用图文内容
+   */
+  opus: {
+    /**
+     * 跳转链接，目前用的是相对协议(即//开头而不是https://开头)
+     */
+    jump_url: string;
+    /**
+     * 图片数组
+     */
+    pics: {
+      /**
+       * 图片实际宽度
+       */
+      width: number;
+      /**
+       * 图片实际高度
+       */
+      height: number;
+      /**
+       * 图片实际大小，单位：KiB(1024进制)，之所以要强调这个单位是因为我发现chrome的开发者工具用的是1000进制
+       */
+      size: number;
+      /**
+       * 图片URL
+       */
+      url: string;
+    }[];
+    /**
+     * 文字内容
+     */
+    summary: RichTextDesc;
+    /**
+     * 标题
+     */
+    title: string;
+  }
+}
+
 export enum MajorType {
   /**
    * 视频
@@ -212,6 +258,10 @@ export enum MajorType {
    * 番剧
    */
   PGC = "MAJOR_TYPE_PGC",
+  /**
+   * 通用图文内容
+   */
+  OPUS = "MAJOR_TYPE_OPUS",
 }
 
 export {};
