@@ -6,6 +6,7 @@ export type ModuleDynamicMajor<T extends DynamicType> =
   _MajorTypeUtil<VideoMajor, DynamicType.VIDEO, T>
   & _MajorTypeUtil<ArticleMajor | OPUSMajor, DynamicType.ARTICLE, T>
   & _MajorTypeUtil<DrawMajor, DynamicType.DRAW, T>
+  & _MajorTypeUtil<LiveMajor, DynamicType.LIVE, T>
   & _MajorTypeUtil<LiveRecommendMajor, DynamicType.LIVE_RECOMMEND, T>
   & _MajorTypeUtil<PGCMajor, DynamicType.PGC, T>
   ;
@@ -45,7 +46,7 @@ interface VideoMajor {
      */
     duration_text: string;
     /**
-     * 视频的跳转链接
+     * 跳转链接，目前用的是相对协议(即//开头而不是https://开头)
      */
     jump_url: string;
     /**
@@ -74,6 +75,48 @@ interface LiveRecommendMajor {
      * 直播卡片的内容，值为JSON文本，可以使用JSON.parse解析
      */
     content: string;
+    /**
+     * 未知字段(用途未知、可用值未知)
+     */
+    reserve_type: number;
+  };
+}
+
+interface LiveMajor {
+  type: MajorType.LIVE;
+  live: {
+    /**
+     * 直播间房间号
+     */
+    id: number;
+    /**
+     * 直播间标题
+     */
+    title: string;
+    /**
+     * 直播状态：1开播，0关播
+     */
+    live_state: number;
+    /**
+     * 直播封面图片URL
+     */
+    cover: string;
+    /**
+     * 直播信息的第一部分，目前观察到用来显示分区
+     */
+    desc_first: string;
+    /**
+     * 直播信息的第二部分，目前观察到用来显示多少人看过
+     */
+    desc_second: string;
+    /**
+     * 跳转链接，目前用的是相对协议(即//开头而不是https://开头)
+     */
+    jump_url: string;
+    /**
+     * 直播状态标识，在直播封面右上角显示
+     */
+    badge: ContentBadge;
     /**
      * 未知字段(用途未知、可用值未知)
      */
@@ -254,6 +297,10 @@ export enum MajorType {
    * 直播推送
    */
   LIVE_RECOMMEND = "MAJOR_TYPE_LIVE_RCMD",
+  /**
+   * 分享直播间(目前发现只有直接从直播间分享的是这个类型)
+   */
+  LIVE = "MAJOR_TYPE_LIVE",
   /**
    * 番剧
    */

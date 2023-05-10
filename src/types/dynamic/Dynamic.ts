@@ -23,6 +23,7 @@ type _InternalDynamicItem<Attr extends _InternalDynamicAttr = _InternalDynamicAt
   | _DynamicTypeUtil<WordDynamic, Attr>
   | _DynamicTypeUtil<DrawDynamic, Attr>
   | (Attr extends _InternalDynamicAttr.FORWARD_ORIGIN ? never : _DynamicTypeUtil<ForwardDynamic, Attr>)
+  | _DynamicTypeUtil<LiveDynamic, Attr>
   | _DynamicTypeUtil<LiveRecommendDynamic, Attr>
   );
 
@@ -117,6 +118,7 @@ type ArticleDynamic = { type: DynamicType.ARTICLE; };
 type VideoDynamic = { type: DynamicType.VIDEO; };
 type WordDynamic = { type: DynamicType.WORD; };
 type DrawDynamic = { type: DynamicType.DRAW; };
+type LiveDynamic = { type: DynamicType.LIVE; };
 type LiveRecommendDynamic = { type: DynamicType.LIVE_RECOMMEND; };
 
 interface ForwardDynamic {
@@ -157,6 +159,10 @@ export enum DynamicType {
    * 转发动态
    */
   FORWARD = 'DYNAMIC_TYPE_FORWARD',
+  /**
+   * 分享直播间(目前发现只有直接从直播间分享的是这个类型)
+   */
+  LIVE = 'DYNAMIC_TYPE_LIVE',
   /**
    * 直播推送
    */
