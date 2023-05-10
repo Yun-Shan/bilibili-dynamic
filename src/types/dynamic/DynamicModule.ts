@@ -247,7 +247,7 @@ type OptionalDesc<T extends DynamicType> = T extends DynamicTypeHasDesc ? RichTe
 /**
  * 只有指定的动态类型包含或有可能包含major字段
  */
-type DynamicTypeHasMajor = DynamicType.VIDEO | DynamicType.ARTICLE | DynamicType.DRAW| DynamicType.LIVE | DynamicType.LIVE_RECOMMEND | DynamicType.PGC;
+type DynamicTypeHasMajor = DynamicType.VIDEO | DynamicType.ARTICLE | DynamicType.DRAW | DynamicType.LIVE | DynamicType.LIVE_RECOMMEND | DynamicType.PGC;
 type OptionalMajor<T extends DynamicType> = T extends DynamicTypeHasMajor ? ModuleDynamicMajor<T> : null;
 
 export {};

@@ -25,6 +25,7 @@ type _InternalDynamicItem<Attr extends _InternalDynamicAttr = _InternalDynamicAt
   | (Attr extends _InternalDynamicAttr.FORWARD_ORIGIN ? never : _DynamicTypeUtil<ForwardDynamic, Attr>)
   | _DynamicTypeUtil<LiveDynamic, Attr>
   | _DynamicTypeUtil<LiveRecommendDynamic, Attr>
+  | _DynamicTypeUtil<PGCDynamic, Attr>
   );
 
 type _DynamicTypeUtil<T extends {type: DynamicType}, Attr extends _InternalDynamicAttr> = {
@@ -120,6 +121,7 @@ type WordDynamic = { type: DynamicType.WORD; };
 type DrawDynamic = { type: DynamicType.DRAW; };
 type LiveDynamic = { type: DynamicType.LIVE; };
 type LiveRecommendDynamic = { type: DynamicType.LIVE_RECOMMEND; };
+type PGCDynamic = { type: DynamicType.PGC; };
 
 interface ForwardDynamic {
   type: DynamicType.FORWARD;
