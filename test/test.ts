@@ -1,11 +1,12 @@
-const assert = require('assert');
-const validate = require('jsonschema').validate;
-const fs = require('fs');
-const path = require('path');
+import * as assert from 'assert';
+import { validate } from 'jsonschema';
+import * as fs from 'fs';
+import * as path from 'path';
+import { Config, createGenerator } from 'ts-json-schema-generator';
 
-const {createGenerator, Config} = require('ts-json-schema-generator');
 
-const config: typeof Config = {
+
+const config: Config = {
   path: './src/types/dynamic/Dynamic.ts',
   tsconfig: './tsconfig.json',
   type: 'DynamicItem',
