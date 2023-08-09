@@ -2,7 +2,7 @@ import { DynamicModuleAuthor, DynamicModuleDynamic } from './DynamicModule';
 import { RichTextDesc } from './RichTextNode';
 import { Nullable } from '../_internal/util';
 
-export type DynamicItem = _InternalDynamicItem;
+export type DynamicItem = _InternalDynamicItem | NoneDynamicItem;
 
 type _InternalDynamicItem<Attr extends _InternalDynamicAttr = _InternalDynamicAttr.NORMAL> = {
   /**
@@ -27,6 +27,51 @@ type _InternalDynamicItem<Attr extends _InternalDynamicAttr = _InternalDynamicAt
   | _DynamicTypeUtil<LiveRecommendDynamic, Attr>
   | _DynamicTypeUtil<PGCDynamic, Attr>
   );
+
+/**
+ * 被删除的动态
+ */
+type NoneDynamicItem = {
+  basic: {
+    comment_id_str: "";
+    comment_type: 0;
+    like_icon: {
+      action_url: "";
+      end_url: "";
+      id: 0;
+      start_url: "";
+    };
+    rid_str: "";
+  };
+  id_str: null;
+  modules: {
+    module_author: {
+      face: "";
+      face_nft: false;
+      following: false;
+      jump_url: "";
+      label: "";
+      mid: 0;
+      name: "";
+      pub_action: "";
+      pub_time: "";
+      pub_ts: 0;
+      type: "AUTHOR_TYPE_NORMAL";
+    };
+    module_dynamic: {
+      additional: null;
+      desc: null;
+      major: {
+        none: {
+          tips: "源动态已被作者删除"
+        };
+        type: "MAJOR_TYPE_NONE";
+      };
+    };
+  };
+  type: DynamicType.NONE;
+  visible: boolean;
+}
 
 type _DynamicTypeUtil<T extends {type: DynamicType}, Attr extends _InternalDynamicAttr> = {
   /**
@@ -173,6 +218,10 @@ export enum DynamicType {
    * 番剧
    */
   PGC = 'DYNAMIC_TYPE_PGC',
+  /**
+   * 已删除的动态，一般只会出现在转发动态的源动态被删除
+   */
+  NONE = 'DYNAMIC_TYPE_NONE',
 }
 
 /**
