@@ -166,7 +166,7 @@ type WordDynamic = { type: DynamicType.WORD; };
 type DrawDynamic = { type: DynamicType.DRAW; };
 type LiveDynamic = { type: DynamicType.LIVE; };
 type LiveRecommendDynamic = { type: DynamicType.LIVE_RECOMMEND; };
-type PGCDynamic = { type: DynamicType.PGC; };
+type PGCDynamic = { type: DynamicType.PGC | DynamicType.PGC_UNION; };
 
 interface ForwardDynamic {
   type: DynamicType.FORWARD;
@@ -215,9 +215,13 @@ export enum DynamicType {
    */
   LIVE_RECOMMEND = 'DYNAMIC_TYPE_LIVE_RCMD',
   /**
-   * 番剧
+   * 番剧，疑似已弃用
    */
   PGC = 'DYNAMIC_TYPE_PGC',
+  /**
+   * 番剧
+   */
+  PGC_UNION = 'DYNAMIC_TYPE_PGC_UNION',
   /**
    * 已删除的动态，一般只会出现在转发动态的源动态被删除
    */
