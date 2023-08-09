@@ -8,7 +8,7 @@ export type ModuleDynamicMajor<T extends DynamicType> =
   & _MajorTypeUtil<DrawMajor, DynamicType.DRAW, T>
   & _MajorTypeUtil<LiveMajor, DynamicType.LIVE, T>
   & _MajorTypeUtil<LiveRecommendMajor, DynamicType.LIVE_RECOMMEND, T>
-  & _MajorTypeUtil<PGCMajor, DynamicType.PGC, T>
+  & _MajorTypeUtil<PGCMajor, DynamicType.PGC | DynamicType.PGC_UNION, T>
   ;
 
 type _MajorTypeUtil<M, EXPECT extends DynamicType, ACTUAL extends DynamicType> = ACTUAL extends EXPECT ? M : {};
