@@ -173,7 +173,7 @@ interface ForwardDynamic {
   /**
    * 源动态信息
    */
-  orig: _InternalDynamicItem<_InternalDynamicAttr.FORWARD_ORIGIN>;
+  orig: _InternalDynamicItem<_InternalDynamicAttr.FORWARD_ORIGIN> | NoneDynamicItem;
 }
 
 enum _InternalDynamicAttr {
