@@ -215,17 +215,29 @@ export enum DynamicType {
    */
   LIVE_RECOMMEND = 'DYNAMIC_TYPE_LIVE_RCMD',
   /**
-   * 番剧，疑似已弃用
+   * PGC内容(如番剧、影视剧)，该类型疑似已弃用
    */
   PGC = 'DYNAMIC_TYPE_PGC',
   /**
-   * 番剧
+   * PGC内容(如番剧、影视剧)
    */
   PGC_UNION = 'DYNAMIC_TYPE_PGC_UNION',
   /**
    * 已删除的动态，一般只会出现在转发动态的源动态被删除
    */
   NONE = 'DYNAMIC_TYPE_NONE',
+  /**
+   * 某种通用的动态样式(展示样式是一种较扁的矩形)，目前暂时发现分享会员购、专属活动页、赛事、游戏、小黑屋、工房集市、装扮时会使用这个类型
+   */
+  COMMON_SQUARE = 'DYNAMIC_TYPE_COMMON_SQUARE',
+  /**
+   * 某种通用的动态样式(展示样式是一种比COMMON_SQUARE更高的矩形)，目前暂时发现分享漫画时会使用这个类型
+   */
+  COMMON_VERTICAL = 'DYNAMIC_TYPE_COMMON_VERTICAL',
+  /**
+   * 课堂，即付费购买课程
+   */
+  COURSES_SEASON = 'DYNAMIC_TYPE_COURSES_SEASON',
 }
 
 /**

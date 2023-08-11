@@ -201,14 +201,15 @@ interface MemberVipInfo {
 export interface DynamicModuleDynamic<T extends DynamicType> {
   /**
    * 未知字段(可用值未知)，额外组件
+   * 已知用户发视频时同步发布的动态带图片时，type=ADDITIONAL_TYPE_UGC
    * 已知显示相关游戏时，type=ADDITIONAL_TYPE_COMMON
    * 已知显示预约时，type=ADDITIONAL_TYPE_RESERVE
    * 已知显示投票时，type=ADDITIONAL_TYPE_VOTE
    * 已知显示包月充电专属抽奖时，type=ADDITIONAL_TYPE_UPOWER_LOTTERY
    * 已知显示赛事时(暂时只看到回放的，理论上直播时应该也是这个)，type=ADDITIONAL_TYPE_MATCH
-   * TODO 已知很多个type了，可以考虑转换成enum了
+   * TODO 已知很多个type了，可以考虑转换成enum并添加相应类型声明了
    */
-  additional: Nullable<{ type: "ADDITIONAL_TYPE_COMMON" | "ADDITIONAL_TYPE_RESERVE" | "ADDITIONAL_TYPE_VOTE" | "ADDITIONAL_TYPE_UPOWER_LOTTERY" | string; } & { [key: string]: object; }>;
+  additional: Nullable<{ type: "ADDITIONAL_TYPE_UGC" | "ADDITIONAL_TYPE_COMMON" | "ADDITIONAL_TYPE_RESERVE" | "ADDITIONAL_TYPE_VOTE" | "ADDITIONAL_TYPE_UPOWER_LOTTERY" | string; } & { [key: string]: object; }>;
   /**
    * 动态的描述内容
    */
@@ -239,7 +240,9 @@ export interface DynamicModuleDynamic<T extends DynamicType> {
 /**
  * 指定的动态类型包含或有可能包含desc字段
  */
-type DynamicTypeHasDesc =  DynamicType.WORD | DynamicType.DRAW | DynamicType.FORWARD;
+type DynamicTypeHasDesc =  never
+  | DynamicType.WORD | DynamicType.DRAW | DynamicType.FORWARD
+  | DynamicType.COMMON_SQUARE | DynamicType.COMMON_VERTICAL;
 type DynamicTypeMayHasDesc = DynamicType.VIDEO;
 type OptionalDesc<T extends DynamicType> = T extends DynamicTypeHasDesc ? RichTextDesc
   : (T extends DynamicTypeMayHasDesc ? Nullable<RichTextDesc> : null);
@@ -250,7 +253,9 @@ type OptionalDesc<T extends DynamicType> = T extends DynamicTypeHasDesc ? RichTe
 type DynamicTypeHasMajor = never
   | DynamicType.VIDEO | DynamicType.ARTICLE | DynamicType.DRAW
   | DynamicType.LIVE | DynamicType.LIVE_RECOMMEND
-  | DynamicType.PGC | DynamicType.PGC_UNION;
+  | DynamicType.PGC | DynamicType.PGC_UNION
+  | DynamicType.COMMON_SQUARE | DynamicType.COMMON_VERTICAL
+  | DynamicType.COURSES_SEASON;
 type OptionalMajor<T extends DynamicType> = T extends DynamicTypeHasMajor ? ModuleDynamicMajor<T> : null;
 
 export {};

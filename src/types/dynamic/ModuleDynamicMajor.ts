@@ -9,6 +9,8 @@ export type ModuleDynamicMajor<T extends DynamicType> =
   & _MajorTypeUtil<LiveMajor, DynamicType.LIVE, T>
   & _MajorTypeUtil<LiveRecommendMajor, DynamicType.LIVE_RECOMMEND, T>
   & _MajorTypeUtil<PGCMajor, DynamicType.PGC | DynamicType.PGC_UNION, T>
+  & _MajorTypeUtil<CommonMajor, DynamicType.COMMON_SQUARE | DynamicType.COMMON_VERTICAL, T>
+  & _MajorTypeUtil<CoursesMajor, DynamicType.COURSES_SEASON, T>
   ;
 
 type _MajorTypeUtil<M, EXPECT extends DynamicType, ACTUAL extends DynamicType> = ACTUAL extends EXPECT ? M : {};
@@ -94,11 +96,12 @@ interface LiveMajor {
      */
     title: string;
     /**
-     * 直播状态：1开播，0关播
+     * 未知字段(用途未知、可用值未知)
+     * 猜测是直播状态：1开播，0关播
      */
     live_state: number;
     /**
-     * 直播封面图片URL
+     * 直播间封面图的URL
      */
     cover: string;
     /**
@@ -216,19 +219,22 @@ interface PGCMajor {
      */
     jump_url: string;
     /**
-     * ep的id，就是这个url里的id：https://www.bilibili.com/bangumi/play/ep{epid}
+     * ep(episode)的id，就是这个url里的id：https://www.bilibili.com/bangumi/play/ep{epid}
      */
     epid: number;
     /**
-     * 番剧id
+     * pgc内容id(整个番剧的id、整个电视剧的id)，相同的IP的每一季的id都不一样
      */
     season_id: number;
     /**
-     * 未知
+     * 未知字段(用途未知、可用值未知)
+     * 应该是标记PGC类型
      */
     type: number;
     /**
-     * 未知
+     * 未知字段(用途未知、可用值未知)
+     * 应该是标记PGC子类型
+     * 已知(不完全确定)：番剧：1，电影：2，纪录片：3，国创：4，电视剧：5，综艺：7
      */
     sub_type: number;
     stat: ContentStat;
@@ -280,6 +286,100 @@ interface OPUSMajor {
   }
 }
 
+/**
+ * 这也是通用图文内容
+ */
+interface CommonMajor {
+  type: MajorType.COMMON
+  /**
+   * 通用图文内容
+   */
+  common: {
+    badge: ContentBadge;
+    /**
+     * 未知字段(用途未知、可用值未知)
+     * 已知(不确定)：专属活动页：1，会员购/赛事/工房集市：3，游戏：111或0或3(这个值具体根据什么情况变化不清楚)，小黑屋：121，装扮：3，热门活动：3
+     *      手机上是专属页面展示一系列视频且分享后无法在pc web打开且pc web跳转的url似乎与话题有关：211
+     *
+     * 猜测：值为3时似乎表示内容和b站官方有强关联
+     */
+    biz_type: number;
+    /**
+     * 未知字段(用途未知、可用值未知)
+     */
+    label: string;
+    /**
+     * 卡片左侧图片的URL
+     */
+    cover: string;
+    /**
+     * 标题
+     */
+    title: string;
+    /**
+     * 内容
+     */
+    desc: string;
+    /**
+     * 跳转链接
+     */
+    jump_url: string;
+    /**
+     * 展示样式
+     * 已知：动态类型为DYNAMIC_TYPE_COMMON_SQUARE：1，动态类型为DYNAMIC_TYPE_COMMON_VERTICAL：2
+     * 已知：值为1时pc web展示的是高为80px的矩形卡片，值为2时pc web展示的是高为160px的矩形卡片
+     */
+    style: 1;
+    /**
+     * 未知字段(用途未知、可用值未知)
+     * 通过分享专属活动页测试，源动态是该动态类型时，位于源动态的该字段每次分享都不一样
+     */
+    id: string;
+    /**
+     * 未知字段(用途未知、可用值未知)
+     * 通过分享专属活动页测试，源动态是该动态类型时，位于源动态的该字段每次分享都不一样
+     */
+    sketch_id: string;
+  }
+}
+
+/**
+ * 课程
+ */
+interface CoursesMajor {
+  type: MajorType.COURSES
+  /**
+   * 课程信息
+   */
+  courses: {
+    badge: ContentBadge;
+    /**
+     * 课程封面URL
+     */
+    cover: string;
+    /**
+     * 课程标题
+     */
+    title: string;
+    /**
+     * 课程简介
+     */
+    sub_title: string;
+    /**
+     * 课时信息
+     */
+    desc: string;
+    /**
+     * 跳转链接
+     */
+    jump_url: string;
+    /**
+     * 课程id
+     */
+    id: string;
+  }
+}
+
 export enum MajorType {
   /**
    * 视频
@@ -306,9 +406,17 @@ export enum MajorType {
    */
   PGC = "MAJOR_TYPE_PGC",
   /**
-   * 通用图文内容
+   * 通用图文内容，应该主要用于原创内容(目前已知的只有专栏)
    */
   OPUS = "MAJOR_TYPE_OPUS",
+  /**
+   * 通用图文内容，目前发现主要跟特殊官方功能有关系，例如专属活动页、会员购、漫画、赛事中心、游戏中心、小黑屋、工房集市、装扮等
+   */
+  COMMON = "MAJOR_TYPE_COMMON",
+  /**
+   * 课程
+   */
+  COURSES = "MAJOR_TYPE_COURSES",
 }
 
 export {};
