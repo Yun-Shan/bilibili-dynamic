@@ -2,6 +2,7 @@ import { DynamicModuleAuthor, DynamicModuleDynamic } from './DynamicModule';
 import { RichTextDesc } from './RichTextNode';
 import { Nullable } from '../_internal/util';
 
+// noinspection JSUnusedGlobalSymbols
 export type DynamicItem = _InternalDynamicItem | NoneDynamicItem;
 
 type _InternalDynamicItem<Attr extends _InternalDynamicAttr = _InternalDynamicAttr.NORMAL> = {
@@ -18,7 +19,7 @@ type _InternalDynamicItem<Attr extends _InternalDynamicAttr = _InternalDynamicAt
    */
   visible: boolean;
 } & (
-  _DynamicTypeUtil<ArticleDynamic, Attr>
+  | _DynamicTypeUtil<ArticleDynamic, Attr>
   | _DynamicTypeUtil<VideoDynamic, Attr>
   | _DynamicTypeUtil<WordDynamic, Attr>
   | _DynamicTypeUtil<DrawDynamic, Attr>
@@ -26,6 +27,8 @@ type _InternalDynamicItem<Attr extends _InternalDynamicAttr = _InternalDynamicAt
   | _DynamicTypeUtil<LiveDynamic, Attr>
   | _DynamicTypeUtil<LiveRecommendDynamic, Attr>
   | _DynamicTypeUtil<PGCDynamic, Attr>
+  | _DynamicTypeUtil<CommonDynamic, Attr>
+  | _DynamicTypeUtil<CoursesDynamic, Attr>
   );
 
 /**
@@ -167,6 +170,8 @@ type DrawDynamic = { type: DynamicType.DRAW; };
 type LiveDynamic = { type: DynamicType.LIVE; };
 type LiveRecommendDynamic = { type: DynamicType.LIVE_RECOMMEND; };
 type PGCDynamic = { type: DynamicType.PGC | DynamicType.PGC_UNION; };
+type CommonDynamic = { type: DynamicType.COMMON_SQUARE | DynamicType.COMMON_VERTICAL; };
+type CoursesDynamic = { type: DynamicType.COURSES_SEASON; };
 
 interface ForwardDynamic {
   type: DynamicType.FORWARD;

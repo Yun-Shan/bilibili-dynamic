@@ -9,7 +9,7 @@ export type ModuleDynamicMajor<T extends DynamicType> =
   & _MajorTypeUtil<LiveMajor, DynamicType.LIVE, T>
   & _MajorTypeUtil<LiveRecommendMajor, DynamicType.LIVE_RECOMMEND, T>
   & _MajorTypeUtil<PGCMajor, DynamicType.PGC | DynamicType.PGC_UNION, T>
-  & _MajorTypeUtil<CommonMajor, DynamicType.COMMON_SQUARE | DynamicType.COMMON_VERTICAL, T>
+  & _MajorTypeUtil<CommonMajor<T>, DynamicType.COMMON_SQUARE | DynamicType.COMMON_VERTICAL, T>
   & _MajorTypeUtil<CoursesMajor, DynamicType.COURSES_SEASON, T>
   ;
 
@@ -289,7 +289,7 @@ interface OPUSMajor {
 /**
  * 这也是通用图文内容
  */
-interface CommonMajor {
+interface CommonMajor<T> {
   type: MajorType.COMMON
   /**
    * 通用图文内容
@@ -329,7 +329,7 @@ interface CommonMajor {
      * 已知：动态类型为DYNAMIC_TYPE_COMMON_SQUARE：1，动态类型为DYNAMIC_TYPE_COMMON_VERTICAL：2
      * 已知：值为1时pc web展示的是高为80px的矩形卡片，值为2时pc web展示的是高为160px的矩形卡片
      */
-    style: 1;
+    style: T extends DynamicType.COMMON_VERTICAL ? 2 : 1;
     /**
      * 未知字段(用途未知、可用值未知)
      * 通过分享专属活动页测试，源动态是该动态类型时，位于源动态的该字段每次分享都不一样

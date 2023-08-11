@@ -240,7 +240,7 @@ export interface DynamicModuleDynamic<T extends DynamicType> {
 /**
  * 指定的动态类型包含或有可能包含desc字段
  */
-type DynamicTypeHasDesc =  never
+type DynamicTypeHasDesc =
   | DynamicType.WORD | DynamicType.DRAW | DynamicType.FORWARD
   | DynamicType.COMMON_SQUARE | DynamicType.COMMON_VERTICAL;
 type DynamicTypeMayHasDesc = DynamicType.VIDEO;
@@ -250,7 +250,7 @@ type OptionalDesc<T extends DynamicType> = T extends DynamicTypeHasDesc ? RichTe
 /**
  * 只有指定的动态类型包含或有可能包含major字段
  */
-type DynamicTypeHasMajor = never
+type DynamicTypeHasMajor =
   | DynamicType.VIDEO | DynamicType.ARTICLE | DynamicType.DRAW
   | DynamicType.LIVE | DynamicType.LIVE_RECOMMEND
   | DynamicType.PGC | DynamicType.PGC_UNION
