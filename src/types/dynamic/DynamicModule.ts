@@ -201,7 +201,7 @@ interface MemberVipInfo {
 export interface DynamicModuleDynamic<T extends DynamicType> {
   /**
    * 未知字段(可用值未知)，额外组件
-   * 已知用户发视频时同步发布的动态带图片时，type=ADDITIONAL_TYPE_UGC
+   * 已知用户在APP评论视频时勾选了转到动态时，type=ADDITIONAL_TYPE_UGC，此时动态类型是WORD/DRAW(根据有没有图)
    * 已知显示相关游戏时，type=ADDITIONAL_TYPE_COMMON
    * 已知显示预约时，type=ADDITIONAL_TYPE_RESERVE
    * 已知显示投票时，type=ADDITIONAL_TYPE_VOTE
