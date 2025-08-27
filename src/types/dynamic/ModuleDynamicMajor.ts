@@ -5,12 +5,15 @@ import { RichTextDesc } from './RichTextNode';
 export type ModuleDynamicMajor<T extends DynamicType> =
   _MajorTypeUtil<VideoMajor, DynamicType.VIDEO, T>
   & _MajorTypeUtil<ArticleMajor | OPUSMajor, DynamicType.ARTICLE, T>
-  & _MajorTypeUtil<DrawMajor, DynamicType.DRAW, T>
+  & _MajorTypeUtil<DrawMajor | OPUSMajor, DynamicType.DRAW, T>
   & _MajorTypeUtil<LiveMajor, DynamicType.LIVE, T>
   & _MajorTypeUtil<LiveRecommendMajor, DynamicType.LIVE_RECOMMEND, T>
   & _MajorTypeUtil<PGCMajor, DynamicType.PGC | DynamicType.PGC_UNION, T>
   & _MajorTypeUtil<CommonMajor<T>, DynamicType.COMMON_SQUARE | DynamicType.COMMON_VERTICAL, T>
   & _MajorTypeUtil<CoursesMajor, DynamicType.COURSES_SEASON, T>
+  & _MajorTypeUtil<UGCSeasonMajor, DynamicType.UGC_SEASON, T>
+  & _MajorTypeUtil<MusicMajor, DynamicType.MUSIC, T>
+  & _MajorTypeUtil<MediaListMajor, DynamicType.MEDIALIST, T>
   ;
 
 type _MajorTypeUtil<M, EXPECT extends DynamicType, ACTUAL extends DynamicType> = ACTUAL extends EXPECT ? M : {};
@@ -238,6 +241,10 @@ interface PGCMajor {
      */
     sub_type: number;
     stat: ContentStat;
+    /**
+     * 是否隐藏状态栏(1是，0否)
+     */
+    stat_hidden?: number;
   }
 }
 
@@ -250,6 +257,14 @@ interface OPUSMajor {
    * 通用图文内容
    */
   opus: {
+    /**
+     * 未知字段(用途未知、可用值未知)
+     */
+    fold_action: string[];
+    /**
+     * 未知字段(用途未知、可用值未知)
+     */
+    style?: number;
     /**
      * 跳转链接，目前用的是相对协议(即//开头而不是https://开头)
      */
@@ -274,6 +289,14 @@ interface OPUSMajor {
        * 图片URL
        */
       url: string;
+      /**
+       * 未知字段(用途未知、可用值未知)
+       */
+      aigc?: string | null;
+      /**
+       * 未知字段(用途未知、可用值未知)
+       */
+      live_url?: string | null;
     }[];
     /**
      * 文字内容
@@ -282,7 +305,7 @@ interface OPUSMajor {
     /**
      * 标题
      */
-    title: string;
+    title?: string | null;
   }
 }
 
@@ -296,6 +319,10 @@ interface CommonMajor<T> {
    */
   common: {
     badge: ContentBadge;
+    /**
+     * 未知字段(用途未知、可用值未知)
+     */
+    biz_id: number;
     /**
      * 未知字段(用途未知、可用值未知)
      * 已知(不确定)：专属活动页：1，会员购/赛事/工房集市：3，游戏：111或0或3(这个值具体根据什么情况变化不清楚)，小黑屋：121，装扮：3，热门活动：3
@@ -380,6 +407,117 @@ interface CoursesMajor {
   }
 }
 
+/**
+ * 合集更新
+ */
+interface UGCSeasonMajor {
+  type: MajorType.UGC_SEASON
+  /**
+   * 合集更新信息
+   */
+  ugc_season: {
+    badge: ContentBadge;
+    /**
+     * 视频的统计数据，仅用于展示
+     */
+    stat: ContentStat;
+    /**
+     * 视频av号
+     */
+    aid: number;
+    /**
+     * 视频封面url
+     */
+    cover: string;
+    /**
+     * 视频简介
+     */
+    desc: string;
+    /**
+     * 未知字段(用途未知) 猜测是标记是否允许鼠标指上去自动播放预览视频
+     */
+    disable_preview: number;
+    /**
+     * 视频时长，仅用于展示
+     */
+    duration_text: string;
+    /**
+     * 视频标题
+     */
+    title: string;
+  }
+}
+
+/**
+ * 音乐
+ */
+interface MusicMajor {
+  type: MajorType.MUSIC
+  /**
+   * 音乐信息
+   */
+  music: {
+    badge: ContentBadge;
+    /**
+     * 音乐封面URL
+     */
+    cover: string;
+    /**
+     * 音乐标题
+     */
+    title: string;
+    /**
+     * 音乐分类
+     */
+    label: string;
+    /**
+     * 音乐id
+     */
+    id: number;
+    /**
+     * 跳转链接
+     */
+    jump_url: string;
+  }
+}
+
+/**
+ * 收藏夹
+ */
+interface MediaListMajor {
+  type: MajorType.MEDIALIST
+  /**
+   * 收藏夹信息
+   */
+  medialist: {
+    badge: ContentBadge;
+    /**
+     * 收藏夹封面URL
+     */
+    cover: string;
+    /**
+     * 未知字段(用途未知、可用值未知)
+     */
+    cover_type: number;
+    /**
+     * 收藏夹标题
+     */
+    title: string;
+    /**
+     * 收藏夹子标题(实际上应该是固定显示收藏夹内有多少个内容)
+     */
+    sub_title: string;
+    /**
+     * 收藏夹id
+     */
+    id: number;
+    /**
+     * 跳转链接
+     */
+    jump_url: string;
+  }
+}
+
 export enum MajorType {
   /**
    * 视频
@@ -417,6 +555,18 @@ export enum MajorType {
    * 课程
    */
   COURSES = "MAJOR_TYPE_COURSES",
+  /**
+   * 合集
+   */
+  UGC_SEASON = "MAJOR_TYPE_UGC_SEASON",
+  /**
+   * 音乐
+   */
+  MUSIC = "MAJOR_TYPE_MUSIC",
+  /**
+   * 收藏夹
+   */
+  MEDIALIST = "MAJOR_TYPE_MEDIALIST",
 }
 
 export {};

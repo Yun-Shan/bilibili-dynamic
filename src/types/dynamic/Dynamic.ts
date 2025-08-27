@@ -29,6 +29,9 @@ type _InternalDynamicItem<Attr extends _InternalDynamicAttr = _InternalDynamicAt
   | _DynamicTypeUtil<PGCDynamic, Attr>
   | _DynamicTypeUtil<CommonDynamic, Attr>
   | _DynamicTypeUtil<CoursesDynamic, Attr>
+  | _DynamicTypeUtil<UGCSeasonDynamic, Attr>
+  | _DynamicTypeUtil<MusicDynamic, Attr>
+  | _DynamicTypeUtil<MediaListDynamic, Attr>
   );
 
 /**
@@ -172,6 +175,9 @@ type LiveRecommendDynamic = { type: DynamicType.LIVE_RECOMMEND; };
 type PGCDynamic = { type: DynamicType.PGC | DynamicType.PGC_UNION; };
 type CommonDynamic = { type: DynamicType.COMMON_SQUARE | DynamicType.COMMON_VERTICAL; };
 type CoursesDynamic = { type: DynamicType.COURSES_SEASON; };
+type UGCSeasonDynamic = { type: DynamicType.UGC_SEASON; };
+type MusicDynamic = { type: DynamicType.MUSIC; };
+type MediaListDynamic = { type: DynamicType.MEDIALIST; };
 
 interface ForwardDynamic {
   type: DynamicType.FORWARD;
@@ -243,6 +249,18 @@ export enum DynamicType {
    * 课堂，即付费购买课程
    */
   COURSES_SEASON = 'DYNAMIC_TYPE_COURSES_SEASON',
+  /**
+   * 合集更新
+   */
+  UGC_SEASON = 'DYNAMIC_TYPE_UGC_SEASON',
+  /**
+   * 音乐
+   */
+  MUSIC = 'DYNAMIC_TYPE_MUSIC',
+  /**
+   * 收藏夹
+   */
+  MEDIALIST = 'DYNAMIC_TYPE_MEDIALIST',
 }
 
 /**
@@ -268,6 +286,10 @@ interface DynamicBasicInfo {
    * 已知专栏动态时该ID与专栏ID一致，视频动态时与av号一致
    */
   rid_str: string;
+  /**
+   * 动态跳转链接，目前似乎只有opus在用
+   */
+  jump_url?: string | null;
 }
 
 /**

@@ -8,6 +8,10 @@ export interface ContentBadge {
    */
   color: string;
   /**
+   * 用途未知
+   */
+  icon_url?: string | null;
+  /**
    * 文字内容
    */
   text: string;

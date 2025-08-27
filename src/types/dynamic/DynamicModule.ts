@@ -3,6 +3,7 @@ import { ModuleDynamicMajor } from './ModuleDynamicMajor';
 import { DynamicType } from './Dynamic';
 import { Nullable } from '../_internal/util';
 
+// TODO 根据type拆分(也就是专门拆出一个PGC专用的author type)
 export interface DynamicModuleAuthor {
   /**
    * UID
@@ -12,6 +13,11 @@ export interface DynamicModuleAuthor {
    * 昵称
    */
   name: string;
+  /**
+   * 头像参数
+   * TODO 类型未处理
+   */
+  avatar?: any;
   /**
    * 头像URL
    */
@@ -35,7 +41,7 @@ export interface DynamicModuleAuthor {
   /**
    * 认证信息(蓝V、黄V)
    */
-  official_verify: {
+  official_verify?: {
     /**
      * 未知字段(用途未知)
      * 能找到的动态中这个值都是空字符串
@@ -59,6 +65,10 @@ export interface DynamicModuleAuthor {
    */
   pub_time: string;
   /**
+   * 未知字段(用途未知、可用值未知)
+   */
+  pub_location_text?: string;
+  /**
    * 动态发布的时间戳(Unix秒)
    */
   pub_ts: number;
@@ -69,15 +79,15 @@ export interface DynamicModuleAuthor {
   /**
    * 卡片装扮
    */
-  decorate?: DynamicAuthorDecorate;
+  decoration_card?: DynamicAuthorDecorate;
   /**
    * 头像挂饰
    */
-  pendant: MemberPendant;
+  pendant?: MemberPendant;
   /**
    * 大会员信息
    */
-  vip: MemberVipInfo;
+  vip?: MemberVipInfo;
 }
 
 /**
@@ -89,30 +99,51 @@ interface DynamicAuthorDecorate {
    */
   card_url: string;
   /**
+   * 卡片装扮的右上角图片URL(高清)
+   */
+  big_card_url: string;
+  /**
+   * 卡片装扮的右上角图片URL
+   */
+  image_enhance: string;
+  /**
    * 粉丝装扮的信息
    */
   fan: {
     /**
+     * 粉丝装扮名称
+     */
+    name: string;
+    /**
      * 粉丝编号的颜色(16进制颜色格式，带#)
      */
-    color: string
+    color: string;
+    /**
+     * 高级颜色参数
+     * TODO 类型未处理
+     */
+    color_format: any;
     /**
      * 是否是粉丝装扮
      */
-    is_fan: boolean
+    is_fan: number;
     /**
      * 粉丝编号
      */
-    num_str: string
+    num_desc: string;
     /**
      * 粉丝编号
      */
-    number: number
+    number: number;
   };
   /**
    * 装扮的ID
    */
   id: number;
+  /**
+   * 装扮的ID
+   */
+  item_id: number;
   /**
    * 卡片装扮售卖的跳转地址(只能APP访问)
    */
@@ -123,8 +154,14 @@ interface DynamicAuthorDecorate {
   name: string;
   /**
    * 未知字段(用途未知、可用值未知)
+   * 可能的值：2
    */
-  type: number;
+  card_type: number;
+  /**
+   * 未知字段(用途未知、可用值未知)
+   * 可能的值：免费
+   */
+  card_type_name: string;
 }
 
 /**
@@ -157,6 +194,10 @@ interface MemberPendant {
    * 挂饰ID
    */
   pid: number;
+  /**
+   * 未知字段(用途未知、可用值未知)
+   */
+  n_pid: number;
 }
 
 interface MemberVipInfo {
@@ -241,9 +282,9 @@ export interface DynamicModuleDynamic<T extends DynamicType> {
  * 指定的动态类型包含或有可能包含desc字段
  */
 type DynamicTypeHasDesc =
-  | DynamicType.WORD | DynamicType.DRAW | DynamicType.FORWARD
+  | DynamicType.WORD | DynamicType.FORWARD
   | DynamicType.COMMON_SQUARE | DynamicType.COMMON_VERTICAL;
-type DynamicTypeMayHasDesc = DynamicType.VIDEO;
+type DynamicTypeMayHasDesc = DynamicType.VIDEO | DynamicType.DRAW;
 type OptionalDesc<T extends DynamicType> = T extends DynamicTypeHasDesc ? RichTextDesc
   : (T extends DynamicTypeMayHasDesc ? Nullable<RichTextDesc> : null);
 
@@ -255,7 +296,10 @@ type DynamicTypeHasMajor =
   | DynamicType.LIVE | DynamicType.LIVE_RECOMMEND
   | DynamicType.PGC | DynamicType.PGC_UNION
   | DynamicType.COMMON_SQUARE | DynamicType.COMMON_VERTICAL
-  | DynamicType.COURSES_SEASON;
-type OptionalMajor<T extends DynamicType> = T extends DynamicTypeHasMajor ? ModuleDynamicMajor<T> : null;
+  | DynamicType.COURSES_SEASON | DynamicType.UGC_SEASON
+  | DynamicType.MEDIALIST | DynamicType.MUSIC;
+type DynamicTypeMayHasMajor = never;
+type OptionalMajor<T extends DynamicType> = T extends DynamicTypeHasMajor ? ModuleDynamicMajor<T>
+  : (T extends DynamicTypeMayHasMajor ? Nullable<ModuleDynamicMajor<T>> : null);
 
 export {};
