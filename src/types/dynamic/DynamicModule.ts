@@ -284,7 +284,7 @@ export interface DynamicModuleDynamic<T extends DynamicType> {
 type DynamicTypeHasDesc =
   | DynamicType.WORD | DynamicType.FORWARD
   | DynamicType.COMMON_SQUARE | DynamicType.COMMON_VERTICAL;
-type DynamicTypeMayHasDesc = DynamicType.VIDEO | DynamicType.DRAW;
+type DynamicTypeMayHasDesc = DynamicType.VIDEO;
 type OptionalDesc<T extends DynamicType> = T extends DynamicTypeHasDesc ? RichTextDesc
   : (T extends DynamicTypeMayHasDesc ? Nullable<RichTextDesc> : null);
 
@@ -303,3 +303,4 @@ type OptionalMajor<T extends DynamicType> = T extends DynamicTypeHasMajor ? Modu
   : (T extends DynamicTypeMayHasMajor ? Nullable<ModuleDynamicMajor<T>> : null);
 
 export {};
+
