@@ -4,8 +4,7 @@ import { RichTextDesc } from './RichTextNode';
 
 export type ModuleDynamicMajor<T extends DynamicType> =
   _MajorTypeUtil<VideoMajor, DynamicType.VIDEO, T>
-  & _MajorTypeUtil<ArticleMajor | OPUSMajor, DynamicType.ARTICLE, T>
-  & _MajorTypeUtil<DrawMajor | OPUSMajor, DynamicType.DRAW, T>
+  & _MajorTypeUtil<OPUSMajor, DynamicType.DRAW | DynamicType.ARTICLE, T>
   & _MajorTypeUtil<LiveMajor, DynamicType.LIVE, T>
   & _MajorTypeUtil<LiveRecommendMajor, DynamicType.LIVE_RECOMMEND, T>
   & _MajorTypeUtil<PGCMajor, DynamicType.PGC | DynamicType.PGC_UNION, T>
@@ -130,78 +129,6 @@ interface LiveMajor {
   };
 }
 
-interface ArticleMajor {
-  type: MajorType.ARTICLE
-  /**
-   * 专栏信息
-   */
-  article: {
-    /**
-     * 专栏的cid
-     */
-    id: number;
-    /**
-     * 专栏标题
-     */
-    title: string;
-    /**
-     * 专栏简介
-     * 似乎存在一个默认值："点击进入查看全文>"
-     */
-    desc: string;
-    /**
-     * 封面URL列表，并不知道封面什么时候才会有多个
-     */
-    covers: string[];
-    /**
-     * 专栏的跳转链接
-     */
-    jump_url: string;
-    /**
-     * 内容能找到的都是阅读量，但是网页版似乎没显示
-     */
-    label: string;
-  }
-}
-
-interface DrawMajor {
-  type: MajorType.DRAW
-  /**
-   * 动态内的图片信息
-   */
-  draw: {
-    /**
-     * 未知字段(用途未知)
-     */
-    id: number,
-    /**
-     * 图片列表
-     */
-    items: {
-      /**
-       * 图片实际宽度
-       */
-      width: number;
-      /**
-       * 图片实际高度
-       */
-      height: number;
-      /**
-       * 图片实际大小，单位：KiB(1024进制)，之所以要强调这个单位是因为我发现chrome的开发者工具用的是1000进制
-       */
-      size: number;
-      /**
-       * 图片URL
-       */
-      src: string;
-      /**
-       * 未知字段(用途未知、可用值未知)
-       */
-      tags: [];
-    }[];
-  }
-}
-
 interface PGCMajor {
   type: MajorType.PGC
   /**
@@ -305,7 +232,7 @@ interface OPUSMajor {
     /**
      * 标题
      */
-    title?: string | null;
+    title: string | null;
   }
 }
 
@@ -570,3 +497,4 @@ export enum MajorType {
 }
 
 export {};
+
