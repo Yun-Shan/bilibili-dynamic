@@ -201,6 +201,10 @@ interface OPUSMajor {
      */
     pics: {
       /**
+       * 图片URL
+       */
+      url: string;
+      /**
        * 图片实际宽度
        */
       width: number;
@@ -211,11 +215,7 @@ interface OPUSMajor {
       /**
        * 图片实际大小，单位：KiB(1024进制)，之所以要强调这个单位是因为我发现chrome的开发者工具用的是1000进制
        */
-      size: number;
-      /**
-       * 图片URL
-       */
-      url: string;
+      size?: number | null;
       /**
        * 未知字段(用途未知、可用值未知)
        */
@@ -497,4 +497,5 @@ export enum MajorType {
 }
 
 export {};
+
 
