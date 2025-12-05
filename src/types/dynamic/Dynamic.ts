@@ -61,7 +61,7 @@ type NoneDynamicItem = {
       name: "";
       pub_action: "";
       pub_time: "";
-      pub_ts: 0;
+      pub_ts: "0";
       type: "AUTHOR_TYPE_NORMAL";
     };
     module_dynamic: {

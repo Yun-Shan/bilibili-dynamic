@@ -26,7 +26,7 @@ interface DynamicList {
   has_more: boolean;
   offset: string;
   update_baseline: string;
-  update_num: number;
+  update_num: string;
 }
 
 describe('B站动态解析', function() {

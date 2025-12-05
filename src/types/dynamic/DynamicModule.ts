@@ -71,7 +71,7 @@ export interface DynamicModuleAuthor {
   /**
    * 动态发布的时间戳(Unix秒)
    */
-  pub_ts: number;
+  pub_ts: string;
   /**
    * 作者类型，一般情况下都是NORMAL，番剧推送是PGC
    */
